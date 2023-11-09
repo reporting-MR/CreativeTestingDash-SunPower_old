@@ -40,6 +40,7 @@ def main_dashboard():
 
   st.write(st.session_state.full_data)
 
-    
+if __name__ == '__main__':
+    password_protection()
 
     
