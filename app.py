@@ -5,6 +5,7 @@ import pandas
 from google.oauth2 import service_account
 from google.cloud import bigquery
 from datetime import datetime, timedelta
+st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",layout="wide")
 
 def password_protection():
   if 'authenticated' not in st.session_state:
