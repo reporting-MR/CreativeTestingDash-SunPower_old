@@ -40,7 +40,9 @@ def main_dashboard():
       WHERE Date BETWEEN '{one_year_ago}' AND CURRENT_DATE() """
       st.session_state.full_data = pandas.read_gbq(query, credentials=credentials)
 
-  st.write(st.session_state.full_data)
+  data = st.session_state.full_data
+  data = data[data['Ad_Set_Name__Facebook_Ads'] == 'T1-T3_Adults-25+1DC_Batch-26-Shelbi-Repurposed-Test-102423']
+  st.write(data)
 
 if __name__ == '__main__':
     password_protection()
