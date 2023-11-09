@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
 import pandas_gbq
 import pandas 
 from google.oauth2 import service_account
