@@ -41,9 +41,9 @@ def main_dashboard():
       st.session_state.full_data = pandas.read_gbq(query, credentials=credentials)
 
   data = st.session_state.full_data
-  data = data[data['Ad_Set_Name__Facebook_Ads'] == 'T1-T3_Adults-25+1DC_Batch-26-Shelbi-Repurposed-Test-102423']
-  data = data.groupby('Ad_Name__Facebook_Ads')
-  aggregated_df = data.sum()
+  #data = data[data['Ad_Set_Name__Facebook_Ads'] == 'T1-T3_Adults-25+1DC_Batch-26-Shelbi-Repurposed-Test-102423']
+  #data = data.groupby('Ad_Name__Facebook_Ads')
+  #aggregated_df = data.sum()
   st.write(data)
 
 if __name__ == '__main__':
