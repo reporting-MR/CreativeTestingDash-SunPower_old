@@ -81,7 +81,7 @@ def main_dashboard():
   aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
   
   total_df = pd.DataFrame([total])
-  aggregated_data = pd.concat([aggregated_data, total_df])
+  #aggregated_data = pd.concat([aggregated_data, total_df])
   
   # Display the aggregated data
   st.dataframe(aggregated_data, width=2000)
