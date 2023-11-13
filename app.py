@@ -74,16 +74,16 @@ def main_dashboard():
   total['Ad_Name'] = "Total"
   total['Ad_Set'] = ''
   
-
   #Calculate cols
   aggregated_data['CPC'] = aggregated_data['Cost']/aggregated_data['Clicks']
   aggregated_data['CPM'] = (aggregated_data['Cost']/aggregated_data['Impressions'])*1000
   aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
   aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
+
+  aggregated_data = aggregated_data.concat([aggregated_data, total], ignore_index=True)
   
   # Display the aggregated data
   st.dataframe(aggregated_data, width=2000)
-  st.write(total)
 
   #st.write(filtered_data)
 
