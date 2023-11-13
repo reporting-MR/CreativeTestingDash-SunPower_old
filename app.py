@@ -86,7 +86,12 @@ def main_dashboard():
   # Display the aggregated data
   st.dataframe(aggregated_data, width=2000)
 
-  #st.write(filtered_data)
+  col1, col2, col3, col4 = st.columns(4)
+  
+  with col1:
+    st.write("Shelby Warranty Variant")
+    st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCredit.png?raw=true', caption = "Shelby Warranty Variant")
+    
 
 if __name__ == '__main__':
     password_protection()
