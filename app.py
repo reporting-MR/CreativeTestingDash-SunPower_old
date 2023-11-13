@@ -89,9 +89,16 @@ def main_dashboard():
   col1, col2, col3, col4 = st.columns(4)
   
   with col1:
-    st.write("Shelby Warranty Variant")
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCredit.png?raw=true', caption = "Shelby Warranty Variant")
-    
+
+  with col2:
+    st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCredit.png?raw=true', caption = "Shelby Warranty Variant")
+
+  with col3:
+    st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCredit.png?raw=true', caption = "Shelby Warranty Variant")
+
+  with col4:
+    st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCredit.png?raw=true', caption = "Shelby Warranty Variant")
 
 if __name__ == '__main__':
     password_protection()
