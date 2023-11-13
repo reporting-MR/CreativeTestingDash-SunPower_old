@@ -41,13 +41,26 @@ def main_dashboard():
       st.session_state.full_data = pandas.read_gbq(query, credentials=credentials)
 
   data = st.session_state.full_data
-  data = data[data['Ad_Set_Name__Facebook_Ads'] == 'T1-T3_Adults-25+1DC_Batch-26-Shelbi-Repurposed-Test-102423']
+  # Renaming columns in a DataFrame
+  data = data.rename(columns={
+      'Campaign_Name__Facebook_Ads': 'Campaign',
+      'Ad_Set_Name__Facebook_Ads': 'Ad_Set',
+      'Ad_Name__Facebook_Ads' : 'Ad_Name',
+      'Impressions__Facebook_Ads' : 'Impressions',
+      'Link_Clicks__Facebook_Ads' : 'Clicks',
+      'Amount_Spent__Facebook_Ads' : 'Cost',
+      'Lead_Submit_SunPower__Facebook_Ads' : 'Leads',
+      'Ad_Effective_Status__Facebook_Ads' : 'Ad_Status',
+      'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
+  })
+  
+  data = data[data['Ad_Set'] == 'T1-T3_Adults-25+1DC_Batch-26-Shelbi-Repurposed-Test-102423']
 
-  selected_columns = ['Ad_Set_Name__Facebook_Ads', 'Ad_Name__Facebook_Ads', 'Impressions__Facebook_Ads', 'Link_Clicks__Facebook_Ads','Amount_Spent__Facebook_Ads', 'Lead_Submit_SunPower__Facebook_Ads']
+  selected_columns = ['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks','Cost', 'Leads']
   filtered_data = data[selected_columns]
 
-  # Grouping the data by 'Ad_Name__Facebook_Ads'
-  grouped_data = filtered_data.groupby(['Ad_Set_Name__Facebook_Ads', 'Ad_Name__Facebook_Ads'])
+  # Grouping the data by 'Ad_Set'
+  grouped_data = filtered_data.groupby(['Ad_Set', 'Ad_Name'])
   
   # Summing up the numeric columns for each group
   aggregated_data = grouped_data.sum()
