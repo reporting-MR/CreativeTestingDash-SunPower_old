@@ -43,11 +43,9 @@ def main_dashboard():
   data = st.session_state.full_data
   data = data[data['Ad_Set_Name__Facebook_Ads'] == 'T1-T3_Adults-25+1DC_Batch-26-Shelbi-Repurposed-Test-102423']
 
-  selected_columns = ['Date', 'Ad_Set_Name__Facebook_Ads', 'Ad_Name__Facebook_Ads', 'Impressions__Facebook_Ads', 'Link_Clicks__Facebook_Ads','Amount_Spent__Facebook_Ads', 'Lead_Submit_SunPower__Facebook_Ads']
+  selected_columns = ['Ad_Set_Name__Facebook_Ads', 'Ad_Name__Facebook_Ads', 'Impressions__Facebook_Ads', 'Link_Clicks__Facebook_Ads','Amount_Spent__Facebook_Ads', 'Lead_Submit_SunPower__Facebook_Ads']
   filtered_data = data[selected_columns]
 
-  #data = data.groupby('Ad_Name__Facebook_Ads')
-  #aggregated_df = data.sum()
   st.write(filtered_data)
 
 if __name__ == '__main__':
