@@ -72,7 +72,7 @@ def main_dashboard():
   aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
   
   # Display the aggregated data
-  st.write(aggregated_data)
+  st.dataframe(aggregated_data, width=2000)
 
   #st.write(filtered_data)
 
