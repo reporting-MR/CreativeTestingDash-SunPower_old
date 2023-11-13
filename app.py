@@ -68,6 +68,10 @@ def main_dashboard():
 
   total = aggregated_data.sum(numeric_only=True)
   total['CPC'] = total['Cost']/total['Clicks']
+  total['CPM'] = (total['Cost']/total['Impressions'])*1000
+  total['CTR'] = total['Clicks']/total['Impressions']
+  total['CVR'] = total['Leads']/total['Clicks']
+  
   st.write(total)
 
   #Calculate cols
