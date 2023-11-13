@@ -64,6 +64,11 @@ def main_dashboard():
   
   # Summing up the numeric columns for each group
   aggregated_data = grouped_data.sum()
+  aggregated_data.sort_values(by='Leads', ascending=False, inplace=True)
+
+  total = aggregated_data.sum(numeric_only=True)
+  total['CPC'] = total['Cost']/total['Clicks']
+  st.write(total)
 
   #Calculate cols
   aggregated_data['CPC'] = aggregated_data['Cost']/aggregated_data['Clicks']
@@ -72,7 +77,6 @@ def main_dashboard():
   aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
   
   # Display the aggregated data
-  aggregated_data.sort_values(by='Leads', ascending=False, inplace=True)
   st.dataframe(aggregated_data, width=2000)
 
   #st.write(filtered_data)
