@@ -80,11 +80,10 @@ def main_dashboard():
   aggregated_data['CPM'] = (aggregated_data['Cost']/aggregated_data['Impressions'])*1000
   aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
   aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
-
-  aggregated_data = aggregated_data.append(total, ignore_index=True)
   
   # Display the aggregated data
   st.dataframe(aggregated_data, width=2000)
+  st.dataframe(total, width=2000)
 
   #st.write(filtered_data)
 
