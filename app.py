@@ -64,6 +64,9 @@ def main_dashboard():
   
   # Summing up the numeric columns for each group
   aggregated_data = grouped_data.sum()
+
+  #Calculate cols
+  aggregated_data['CPC'] = aggregated_data['Cost']/aggregated_data['Clicks']
   
   # Display the aggregated data
   st.write(aggregated_data)
