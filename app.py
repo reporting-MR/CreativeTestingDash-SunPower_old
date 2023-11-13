@@ -79,8 +79,9 @@ def main_dashboard():
   aggregated_data['CPM'] = (aggregated_data['Cost']/aggregated_data['Impressions'])*1000
   aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
   aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
-
-  aggregated_data = pd.concat([aggregated_data, total], ignore_index=True)
+  
+  total_df = pd.DataFrame([total])
+  aggregated_data = pd.concat([aggregated_data, total_df], ignore_index=True)
   
   # Display the aggregated data
   st.dataframe(aggregated_data, width=2000)
