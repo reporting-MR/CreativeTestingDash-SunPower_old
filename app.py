@@ -42,6 +42,10 @@ def main_dashboard():
 
   data = st.session_state.full_data
   data = data[data['Ad_Set_Name__Facebook_Ads'] == 'T1-T3_Adults-25+1DC_Batch-26-Shelbi-Repurposed-Test-102423']
+  st.write("Column names:", data.columns)  # Check if the column name is correct
+  st.write("Unique values in 'Ad_Set_Name__Facebook_Ads':", data['Ad_Set_Name__Facebook_Ads'].unique())  # Check the unique values
+  st.write("Data type of 'Ad_Set_Name__Facebook_Ads':", data['Ad_Set_Name__Facebook_Ads'].dtype)  # Check the data type
+
   #data = data.groupby('Ad_Name__Facebook_Ads')
   #aggregated_df = data.sum()
   st.write(data)
