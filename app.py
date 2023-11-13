@@ -46,7 +46,16 @@ def main_dashboard():
   selected_columns = ['Ad_Set_Name__Facebook_Ads', 'Ad_Name__Facebook_Ads', 'Impressions__Facebook_Ads', 'Link_Clicks__Facebook_Ads','Amount_Spent__Facebook_Ads', 'Lead_Submit_SunPower__Facebook_Ads']
   filtered_data = data[selected_columns]
 
-  st.write(filtered_data)
+  # Grouping the data by 'Ad_Name__Facebook_Ads'
+  grouped_data = filtered_data.groupby('Ad_Name__Facebook_Ads')
+  
+  # Summing up the numeric columns for each group
+  aggregated_data = grouped_data.sum()
+  
+  # Display the aggregated data
+  st.write(aggregated_data)
+
+  #st.write(filtered_data)
 
 if __name__ == '__main__':
     password_protection()
