@@ -47,7 +47,7 @@ def main_dashboard():
   filtered_data = data[selected_columns]
 
   # Grouping the data by 'Ad_Name__Facebook_Ads'
-  grouped_data = filtered_data.groupby('Ad_Set_Name__Facebook_Ads', 'Ad_Name__Facebook_Ads')
+  grouped_data = filtered_data.groupby(['Ad_Set_Name__Facebook_Ads', 'Ad_Name__Facebook_Ads'])
   
   # Summing up the numeric columns for each group
   aggregated_data = grouped_data.sum()
