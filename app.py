@@ -83,7 +83,7 @@ def main_dashboard():
   
   # Display the aggregated data
   st.dataframe(aggregated_data, width=2000)
-  st.dataframe(total, width=2000)
+  st.write(total)
 
   #st.write(filtered_data)
 
