@@ -91,9 +91,12 @@ def main_dashboard():
 
   # Concatenate aggregated_data with total_df
   final_df = pd.concat([aggregated_data, total_df])
+
+  column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR']
+  final_df = final_df[column_order]
   
   # Display the aggregated data
-  st.dataframe(final_df, width=2000)
+  st.dataframe(final_df, index=False, width=2000)
 
   col1, col2, col3, col4 = st.columns(4)
   
