@@ -92,7 +92,7 @@ def main_dashboard():
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCredit.png?raw=true', caption = "Shelbi Warranty Variant")
 
   with col2:
-    st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCredit.png?raw=true', caption = "Shelbi Tax Credit")
+    st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCreditVariant.png?raw=true', caption = "Shelbi Tax Credit")
 
   with col3:
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCreditVariant.png?raw=true', caption = "Shelbi Tax Credit Variant")
