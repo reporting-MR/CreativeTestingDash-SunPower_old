@@ -85,6 +85,7 @@ def main_dashboard():
   
   # Display the aggregated data
   st.dataframe(aggregated_data, width=2000)
+  st.dataframe(total_df, width=2000)
 
   col1, col2, col3, col4 = st.columns(4)
   
