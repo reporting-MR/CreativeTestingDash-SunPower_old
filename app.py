@@ -81,11 +81,14 @@ def main_dashboard():
   aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
   
   total_df = pd.DataFrame([total])
-  #aggregated_data = pd.concat([aggregated_data, total_df])
+  # Reorder columns in total_df to match aggregated_data
+  total_df = total_df[['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Leads', 'CPC', 'CPM', 'CTR', 'CVR']]
+
+  # Concatenate aggregated_data with total_df
+  final_df = pd.concat([aggregated_data, total_df])
   
   # Display the aggregated data
-  st.dataframe(aggregated_data, width=2000)
-  st.dataframe(total_df, width=2000)
+  st.dataframe(final_df, width=2000)
 
   col1, col2, col3, col4 = st.columns(4)
   
