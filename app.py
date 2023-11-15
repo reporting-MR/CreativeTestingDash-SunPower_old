@@ -64,21 +64,26 @@ def main_dashboard():
   
   # Summing up the numeric columns for each group
   aggregated_data = grouped_data.sum()
-  aggregated_data.sort_values(by='Leads', ascending=False, inplace=True)
+
+  # Reset the index
+  aggregated_data.reset_index(inplace=True)
 
   total = aggregated_data.sum(numeric_only=True)
   total['CPC'] = total['Cost']/total['Clicks']
   total['CPM'] = (total['Cost']/total['Impressions'])*1000
   total['CTR'] = total['Clicks']/total['Impressions']
   total['CVR'] = total['Leads']/total['Clicks']
-  total['Ad_Name'] = "Total"
-  total['Ad_Set'] = ''
+  total['Ad_Name'] = ""
+  total['Ad_Set'] = 'Total'
   
   #Calculate cols
   aggregated_data['CPC'] = aggregated_data['Cost']/aggregated_data['Clicks']
   aggregated_data['CPM'] = (aggregated_data['Cost']/aggregated_data['Impressions'])*1000
   aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
   aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
+
+  #Sort leads so highest performer is at the top
+  aggregated_data.sort_values(by='Leads', ascending=False, inplace=True)
   
   total_df = pd.DataFrame([total])
   # Reorder columns in total_df to match aggregated_data
