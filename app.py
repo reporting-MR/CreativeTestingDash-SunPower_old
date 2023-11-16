@@ -5,6 +5,8 @@ import pandas
 from google.oauth2 import service_account
 from google.cloud import bigquery
 from datetime import datetime, timedelta
+from scipy.stats import chi2_contingency
+
 st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",layout="wide")
 
 def password_protection():
