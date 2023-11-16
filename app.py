@@ -105,9 +105,9 @@ def main_dashboard():
   significance_results = []
 
   # Accessing the first row
-  first_row = df.iloc[0]
+  first_row = final_df.iloc[0]
   # Accessing the second row
-  second_row = df.iloc[1]
+  second_row = final_df.iloc[1]
 
   top_ad_clicks = first_row['Clicks']
   top_ad_impressions = first_row['Impressions']
