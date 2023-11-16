@@ -220,7 +220,7 @@ past_tests = ['T1-T3_Adults-25+1DC_Batch-25b-Static-Test-101223', 'T1-T3_Adults-
 ad_set_dfs = {}
 
 for ad_set in past_tests:
-    ad_set_dfs[ad_set] = process_ad_set_data(full_data, ad_set)
+    ad_set_dfs[ad_set] = process_ad_set_data(data, ad_set)
 
 # Creating a dropdown for each ad set in past_tests
 for ad_set in past_tests:
