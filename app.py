@@ -129,34 +129,6 @@ def main_dashboard():
   
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
-
-  '''
-  significance_results = []
-
-  # Accessing the first row
-  first_row = aggregated_data.iloc[0]
-  # Accessing the second row
-  second_row = aggregated_data.iloc[1]
-
-  top_ad_clicks = first_row['Clicks']
-  top_ad_impressions = first_row['Impressions']
-  
-  clicks_second_row = second_row['Clicks']
-  impressions_second_row = second_row['Impressions']
-  Ad_Name = second_row['Ad_Name']
-
-  # Create the contingency table
-  contingency_table = [[top_ad_clicks, top_ad_impressions - top_ad_clicks],
-                        [clicks_second_row, impressions_second_row - clicks_second_row]]
-
-  chi2, p_value, _, _ = chi2_contingency(contingency_table)
-
-  significance_results.append({'Ad_Variant': Ad_Name, 'P_Value': p_value})
-
-  significance_df = pd.DataFrame(significance_results)
-
-  st.dataframe(significance_df)
-  '''
   
   col1, col2, col3, col4 = st.columns(4)
   
