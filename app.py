@@ -120,9 +120,9 @@ def main_dashboard():
   significance_results = [''] + significance_results + ['']
   
   # Add the significance results to the DataFrame
-  final_df['Significance'] = significance_results
+  final_df['Click Significance'] = significance_results
 
-  column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR', 'Significance']
+  column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR', 'Click Significance']
   final_df = final_df[column_order]
 
   final_df.reset_index(drop=True, inplace=True)
