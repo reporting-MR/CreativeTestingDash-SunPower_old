@@ -214,6 +214,8 @@ def main_dashboard():
   with col4:
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyWarranty.png?raw=true', caption = "Shelbi Warranty")
 
+  st.header('Past Tests')
+  
   past_tests = ['T1-T3_Adults-25+1DC_Batch-25b-Static-Test-101223', 'T1-T3_Adults-25+1DC_Batch-27-Street-Interviews-Test-103123']  # Replace with your actual ad set names
 
   # Dictionary to store DataFrames for each ad set
