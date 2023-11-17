@@ -214,7 +214,7 @@ def main_dashboard():
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
   
-  col1, col2, col3, col4, col5 = st.columns(5)
+  col1, col2, col3, col4, col5 = st.columns(6)
   
   with col1:
     st.write("")
@@ -230,6 +230,9 @@ def main_dashboard():
 
   with col5:
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyWarranty.png?raw=true', caption = "Shelbi Warranty")
+
+  with col6:
+    st.write("")
 
   st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
   
