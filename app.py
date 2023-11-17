@@ -214,18 +214,20 @@ def main_dashboard():
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
   
-  col1, col2, col3, col4 = st.columns(4)
+  col1, col2, col3, col4, col5 = st.columns(4)
   
   with col1:
+  
+  with col2:
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyWarrantyVariant.png?raw=true', caption = "Shelbi Warranty Variant")
 
-  with col2:
+  with col3:
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCredit.png?raw=true', caption = "Shelbi Tax Credit")
 
-  with col3:
+  with col4:
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCreditVariant.png?raw=true', caption = "Shelbi Tax Credit Variant")
 
-  with col4:
+  with col5:
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyWarranty.png?raw=true', caption = "Shelbi Warranty")
 
   st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
