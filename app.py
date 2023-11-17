@@ -29,7 +29,12 @@ def password_protection():
 ### Code for past tests function ###
 def process_ad_set_data(data, ad_set):
     # Filter data for the specific ad set
+
+    st.dataframe(data)
+  
     ad_set_data = data[data['Ad_Set'] == ad_set]
+
+    st.dataframe(ad_set_data)
 
     # Your data processing steps
     selected_columns = ['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Leads']
