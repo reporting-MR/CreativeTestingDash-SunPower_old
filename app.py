@@ -30,6 +30,18 @@ def password_protection():
 def process_ad_set_data(data, ad_set):
     # Filter data for the specific ad set
 
+    data = data.rename(columns={
+      'Campaign_Name__Facebook_Ads': 'Campaign',
+      'Ad_Set_Name__Facebook_Ads': 'Ad_Set',
+      'Ad_Name__Facebook_Ads' : 'Ad_Name',
+      'Impressions__Facebook_Ads' : 'Impressions',
+      'Link_Clicks__Facebook_Ads' : 'Clicks',
+      'Amount_Spent__Facebook_Ads' : 'Cost',
+      'Lead_Submit_SunPower__Facebook_Ads' : 'Leads',
+      'Ad_Effective_Status__Facebook_Ads' : 'Ad_Status',
+      'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
+    })
+  
     st.dataframe(data)
   
     ad_set_data = data[data['Ad_Set'] == ad_set]
