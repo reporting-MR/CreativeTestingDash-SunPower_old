@@ -53,15 +53,15 @@ def process_ad_set_data(data, ad_set):
   
     #Sort leads so highest performer is at the top
     aggregated_data.sort_values(by='Leads', ascending=False, inplace=True)
-    
+
+    st.dataframe(aggregated_data)
+  
     total_df = pd.DataFrame([total])
     # Reorder columns in total_df to match aggregated_data
     total_df = total_df[['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Leads', 'CPC', 'CPM', 'CTR', 'CVR']]
   
     # Concatenate aggregated_data with total_df
     final_df = pd.concat([aggregated_data, total_df])
-
-    st.dataframe(final_df)
   
     # Initialize an empty list to store significance results
     significance_results = []
