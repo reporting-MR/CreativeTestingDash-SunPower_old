@@ -217,7 +217,8 @@ def main_dashboard():
   col1, col2, col3, col4, col5 = st.columns(4)
   
   with col1:
-  
+    st.write("")
+    
   with col2:
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyWarrantyVariant.png?raw=true', caption = "Shelbi Warranty Variant")
 
