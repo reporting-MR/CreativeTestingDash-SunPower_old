@@ -7,7 +7,7 @@ from google.cloud import bigquery
 from datetime import datetime, timedelta
 from scipy.stats import chi2_contingency
 
-st.set_page_config(page_title="SunPower Overview Dash",page_icon="🧑‍🚀",layout="wide")
+st.set_page_config(page_title="SunPower Creative Ad Testing Dash",page_icon="🧑‍🚀",layout="wide")
 
 def password_protection():
   if 'authenticated' not in st.session_state:
@@ -227,7 +227,7 @@ def main_dashboard():
   with col4:
     st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyWarranty.png?raw=true', caption = "Shelbi Warranty")
 
-  st.header('Past Tests')
+  st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
   
   past_tests = ['T1-T3_Adults-25+1DC_Batch-25b-Static-Test-101223', 'T1-T3_Adults-25+1DC_Batch-27-Street-Interviews-Test-103123']  # Replace with your actual ad set names
 
