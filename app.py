@@ -42,11 +42,7 @@ def process_ad_set_data(data, ad_set):
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
     })
   
-    st.dataframe(data)
-  
     ad_set_data = data[data['Ad_Set'] == ad_set]
-
-    st.dataframe(ad_set_data)
 
     # Your data processing steps
     selected_columns = ['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Leads']
@@ -70,8 +66,6 @@ def process_ad_set_data(data, ad_set):
   
     #Sort leads so highest performer is at the top
     aggregated_data.sort_values(by='Leads', ascending=False, inplace=True)
-
-    st.dataframe(aggregated_data)
   
     total_df = pd.DataFrame([total])
     # Reorder columns in total_df to match aggregated_data
