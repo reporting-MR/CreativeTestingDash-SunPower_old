@@ -214,7 +214,7 @@ def main_dashboard():
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
   
-  col1, col2, col3, col4, col5 = st.columns(4)
+  col1, col2, col3, col4, col5 = st.columns(5)
   
   with col1:
     st.write("")
