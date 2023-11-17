@@ -239,8 +239,7 @@ def main_dashboard():
 
   # Creating a dropdown for each ad set in past_tests
   for ad_set in past_tests:
-      st.subheader(f"Data for Ad Set: {ad_set}")
-      if st.checkbox(f"Show Data for {ad_set}"):
+      with st.expander(f"Show Data for {ad_set}"):
           st.dataframe(ad_set_dfs[ad_set], width=2000)
 
 if __name__ == '__main__':
