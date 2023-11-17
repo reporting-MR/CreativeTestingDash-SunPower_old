@@ -60,6 +60,8 @@ def process_ad_set_data(data, ad_set):
   
     # Concatenate aggregated_data with total_df
     final_df = pd.concat([aggregated_data, total_df])
+
+    st.dataframe(final_df)
   
     # Initialize an empty list to store significance results
     significance_results = []
