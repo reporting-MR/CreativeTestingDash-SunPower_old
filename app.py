@@ -90,6 +90,10 @@ def delete_ad_set(ad_set_value_to_delete):
         # Maybe return a status or message indicating success
         return "Row deleted successfully."
 
+     except Exception as e:
+        # Handle exceptions
+        return f"An error occurred: {e}"
+          
 ### Code for past tests function ###
 def process_ad_set_data(data, ad_set):
     # Filter data for the specific ad set
