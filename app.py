@@ -54,7 +54,7 @@ def update_ad_set_table(new_ad_set_name):
 
     # Insert the new Ad-Set with Type 'Current'
     insert_query = """
-    INSERT INTO your_dataset.your_table (Ad_Set, Type) VALUES (@new_ad_set, 'Current')
+    INSERT INTO `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` (Ad_Set, Type) VALUES (@new_ad_set, 'Current')
     """
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
