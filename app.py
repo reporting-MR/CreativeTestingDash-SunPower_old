@@ -232,10 +232,12 @@ def main_dashboard():
   })
 
   # Use this in your Streamlit input handling
-  new_ad_set_name = st.text_input("Update Current Ad Test")
-  st.write("*Note: Adding a new Ad Set will move the current test to past tests")
-  if st.button("Update Ad Set"):
-      update_ad_set_if_exists(new_ad_set_name, st.session_state.full_data)
+  with st.expander('Update Current Test'):
+            new_ad_set_name = st.text_input("Update Current Ad Test")
+            st.write("*Note: Adding a new Ad Set will move the current test to past tests")
+            st.write('Need to refresh the app to see updates')
+            if st.button("Update Ad Set"):
+                update_ad_set_if_exists(new_ad_set_name, st.session_state.full_data)
 
   current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
   data = data[data['Ad_Set'] == current_Ad_Set]
