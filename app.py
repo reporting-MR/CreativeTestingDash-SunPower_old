@@ -338,7 +338,7 @@ def main_dashboard():
   ad_set_dfs = {}
 
   remove_ad_set = st.text_input("Enter Past Ad Set Name to remove")
-  if st.button("Update Ad Set"):
+  if st.button("Remove Ad Set"):
           delete_ad_set(remove_ad_set)
       
 
