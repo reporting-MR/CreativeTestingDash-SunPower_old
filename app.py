@@ -174,7 +174,7 @@ def main_dashboard():
       # Modify the query
       query = f"""
       SELECT * FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` 
-      WHERE Type == 'Current'"""
+      WHERE Type = 'Current'"""
       st.session_state.current_test_data = pandas.read_gbq(query, credentials=credentials)
 
   current_test_data = st.session_state.current_test_data
