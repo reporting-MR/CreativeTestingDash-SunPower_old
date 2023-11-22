@@ -75,6 +75,7 @@ def delete_ad_set(ad_set_value_to_delete):
         delete_query = """
         DELETE FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage`
         WHERE Ad_Set = @ad_set_value
+        AND Type = 'Past'
         """
 
         # Configure query parameters
