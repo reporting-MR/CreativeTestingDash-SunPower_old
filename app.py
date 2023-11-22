@@ -58,6 +58,12 @@ def update_ad_set_table(new_ad_set_name):
     )
     client.query(insert_query, job_config=job_config).result()
 
+def update_ad_set_if_exists(new_ad_set_name, full_data):
+    if new_ad_set_name in full_data['Ad_Set'].values:
+        update_ad_set_table(new_ad_set_name)  # Assuming this is the function you use to update BigQuery
+    else:
+        st.error("Ad_Set does not exist.")
+
 ### Code for past tests function ###
 def process_ad_set_data(data, ad_set):
     # Filter data for the specific ad set
@@ -159,6 +165,20 @@ def main_dashboard():
       st.session_state.full_data = pandas.read_gbq(query, credentials=credentials)
 
   data = st.session_state.full_data
+  
+  if 'current_test_data not in st.session_state:
+      credentials = service_account.Credentials.from_service_account_info(
+          st.secrets["gcp_service_account"]
+      )
+      client = bigquery.Client(credentials=credentials)
+      # Modify the query
+      query = f"""
+      SELECT * FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` 
+      WHERE Type == 'Current'"""
+      st.session_state.current_test_data = pandas.read_gbq(query, credentials=credentials)
+
+  current_test_data = st.session_state.current_test_data
+
   # Renaming columns in a DataFrame
   data = data.rename(columns={
       'Campaign_Name__Facebook_Ads': 'Campaign',
@@ -171,8 +191,13 @@ def main_dashboard():
       'Ad_Effective_Status__Facebook_Ads' : 'Ad_Status',
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
   })
+
+  # Use this in your Streamlit input handling
+  new_ad_set_name = st.text_input("Enter Ad Set Name")
+  if st.button("Update Ad Set"):
+      update_ad_set_if_exists(new_ad_set_name, st.session_state.full_data)
   
-  data = data[data['Ad_Set'] == 'T1-T3_Adults-25+1DC_Batch-26-Shelbi-Repurposed-Test-102423']
+  data = data[data['Ad_Set'] == current_test_data['Ad_Set']]
 
   selected_columns = ['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks','Cost', 'Leads']
   filtered_data = data[selected_columns]
