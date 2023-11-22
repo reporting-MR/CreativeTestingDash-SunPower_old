@@ -9,6 +9,11 @@ from scipy.stats import chi2_contingency
 
 st.set_page_config(page_title="SunPower Creative Ad Testing Dash",page_icon="🧑‍🚀",layout="wide")
 
+credentials = service_account.Credentials.from_service_account_info(
+          st.secrets["gcp_service_account"]
+      )
+client = bigquery.Client(credentials=credentials)
+
 def password_protection():
   if 'authenticated' not in st.session_state:
       st.session_state.authenticated = False
@@ -31,7 +36,7 @@ def update_ad_set_table(new_ad_set_name):
     query = """
     SELECT Ad_Set FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` WHERE Type = 'Current'
     """
-    current_ad_set = client.query(query).result().to_dataframe()
+    current_ad_set = pandas.read_gbq(query, credentials=credentials)
 
     # If current Ad-Set exists, update it to 'Past'
     if not current_ad_set.empty:
