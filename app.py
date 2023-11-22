@@ -78,15 +78,18 @@ def delete_ad_set(ad_set_value_to_delete):
                   WHERE Ad_Set = @ad_set_value
                   AND Type = 'Past'
                   """
+                  # Configure query parameters
+                  job_config = bigquery.QueryJobConfig(
+                      query_parameters=[
+                          bigquery.ScalarQueryParameter("ad_set_value", "STRING", ad_set_value_to_delete)
+                      ]
+                  )
+
+        # Execute the query
+        client.query(delete_query, job_config=job_config).result()
+        st.experimental_rerun()
         else:
                   st.error("Ad_Set does not exist")
-
-        # Configure query parameters
-        job_config = bigquery.QueryJobConfig(
-            query_parameters=[
-                bigquery.ScalarQueryParameter("ad_set_value", "STRING", ad_set_value_to_delete)
-            ]
-        )
 
         # Execute the query
         client.query(delete_query, job_config=job_config).result()
