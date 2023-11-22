@@ -232,7 +232,8 @@ def main_dashboard():
   })
 
   # Use this in your Streamlit input handling
-  new_ad_set_name = st.text_input("Enter Ad Set Name")
+  new_ad_set_name = st.text_input("Update Current Ad Test")
+  st.write("*Note: Adding a new Ad Set will move the current test to past tests")
   if st.button("Update Ad Set"):
       update_ad_set_if_exists(new_ad_set_name, st.session_state.full_data)
 
@@ -338,9 +339,9 @@ def main_dashboard():
   # Dictionary to store DataFrames for each ad set
   ad_set_dfs = {}
 
-  remove_ad_set = st.text_input("Enter Past Ad Set Name to remove")
-  if st.button("Remove Ad Set"):
-          delete_ad_set(remove_ad_set, st.session_state.full_data)
+  #remove_ad_set = st.text_input("Enter Past Ad Set Name to remove")
+  #if st.button("Remove Ad Set"):
+  #        delete_ad_set(remove_ad_set, st.session_state.full_data)
       
   for ad_set in past_tests:
       ad_set_dfs[ad_set] = process_ad_set_data(st.session_state.full_data, ad_set)
