@@ -70,7 +70,6 @@ def update_ad_set_if_exists(new_ad_set_name, full_data):
         st.error("Ad_Set does not exist.")
 
 def delete_ad_set(ad_set_value_to_delete):
-    try:
         # SQL statement for deletion
         delete_query = """
         DELETE FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage`
@@ -89,10 +88,6 @@ def delete_ad_set(ad_set_value_to_delete):
 
         # Maybe return a status or message indicating success
         return "Row deleted successfully."
-
-     except Exception as e:
-        # Handle exceptions
-        return f"An error occurred: {e}"
           
 ### Code for past tests function ###
 def process_ad_set_data(data, ad_set):
