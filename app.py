@@ -178,7 +178,8 @@ def main_dashboard():
       st.session_state.current_test_data = pandas.read_gbq(query, credentials=credentials)
 
   current_test_data = st.session_state.current_test_data
-
+  st.write(current_test_data)
+  
   # Renaming columns in a DataFrame
   data = data.rename(columns={
       'Campaign_Name__Facebook_Ads': 'Campaign',
