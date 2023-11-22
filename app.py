@@ -166,7 +166,7 @@ def main_dashboard():
 
   data = st.session_state.full_data
   
-  if 'current_test_data not in st.session_state:
+  if 'current_test_data' not in st.session_state:
       credentials = service_account.Credentials.from_service_account_info(
           st.secrets["gcp_service_account"]
       )
