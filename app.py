@@ -178,7 +178,6 @@ def main_dashboard():
       st.session_state.current_test_data = pandas.read_gbq(query, credentials=credentials)
 
   current_test_data = st.session_state.current_test_data
-  st.write(current_test_data)
   
   # Renaming columns in a DataFrame
   data = data.rename(columns={
@@ -197,8 +196,9 @@ def main_dashboard():
   new_ad_set_name = st.text_input("Enter Ad Set Name")
   if st.button("Update Ad Set"):
       update_ad_set_if_exists(new_ad_set_name, st.session_state.full_data)
-  
-  data = data[data['Ad_Set'] == current_test_data['Ad_Set']]
+
+  current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
+  data = data[data['Ad_Set'] == current_Ad_Set]
 
   selected_columns = ['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks','Cost', 'Leads']
   filtered_data = data[selected_columns]
