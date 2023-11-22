@@ -70,7 +70,7 @@ def update_ad_set_if_exists(new_ad_set_name, full_data):
     else:
         st.error("Ad_Set does not exist.")
 
-def delete_ad_set(ad_set_value_to_delete):
+def delete_ad_set(ad_set_value_to_delete, full_data):
         # SQL statement for deletion
         if ad_set_value_to_delete in full_data['Ad_Set_Name__Facebook_Ads'].values:
                   delete_query = """
@@ -340,9 +340,8 @@ def main_dashboard():
 
   remove_ad_set = st.text_input("Enter Past Ad Set Name to remove")
   if st.button("Remove Ad Set"):
-          delete_ad_set(remove_ad_set)
+          delete_ad_set(remove_ad_set, full_data)
       
-
   for ad_set in past_tests:
       ad_set_dfs[ad_set] = process_ad_set_data(st.session_state.full_data, ad_set)
 
