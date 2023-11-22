@@ -72,7 +72,7 @@ def update_ad_set_if_exists(new_ad_set_name, full_data):
 
 def delete_ad_set(ad_set_value_to_delete):
         # SQL statement for deletion
-        if new_ad_set_name in full_data['Ad_Set_Name__Facebook_Ads'].values:
+        if ad_set_value_to_delete in full_data['Ad_Set_Name__Facebook_Ads'].values:
                   delete_query = """
                   DELETE FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage`
                   WHERE Ad_Set = @ad_set_value
