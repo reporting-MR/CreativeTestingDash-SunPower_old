@@ -317,6 +317,10 @@ def main_dashboard():
   # Dictionary to store DataFrames for each ad set
   ad_set_dfs = {}
 
+  #remove_ad_set = st.text_input("Enter Past Ad Set Name to remove")
+  #if st.button("Update Ad Set"):
+      
+
   for ad_set in past_tests:
       ad_set_dfs[ad_set] = process_ad_set_data(st.session_state.full_data, ad_set)
 
