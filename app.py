@@ -178,6 +178,19 @@ def main_dashboard():
       st.session_state.current_test_data = pandas.read_gbq(query, credentials=credentials)
 
   current_test_data = st.session_state.current_test_data
+
+  if 'past_test_data' not in st.session_state:
+      credentials = service_account.Credentials.from_service_account_info(
+          st.secrets["gcp_service_account"]
+      )
+      client = bigquery.Client(credentials=credentials)
+      # Modify the query
+      query = f"""
+      SELECT * FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` 
+      WHERE Type = 'Past'"""
+      st.session_state.past_test_data = pandas.read_gbq(query, credentials=credentials)
+
+  past_test_data = st.session_state.past_test_data
   
   # Renaming columns in a DataFrame
   data = data.rename(columns={
@@ -294,7 +307,7 @@ def main_dashboard():
 
   st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
   
-  past_tests = ['T1-T3_Adults-25+1DC_Batch-25b-Static-Test-101223', 'T1-T3_Adults-25+1DC_Batch-27-Street-Interviews-Test-103123']  # Replace with your actual ad set names
+  past_tests = past_test_data['Ad_Set']
 
   # Dictionary to store DataFrames for each ad set
   ad_set_dfs = {}
