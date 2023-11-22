@@ -72,11 +72,14 @@ def update_ad_set_if_exists(new_ad_set_name, full_data):
 
 def delete_ad_set(ad_set_value_to_delete):
         # SQL statement for deletion
-        delete_query = """
-        DELETE FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage`
-        WHERE Ad_Set = @ad_set_value
-        AND Type = 'Past'
-        """
+        if new_ad_set_name in full_data['Ad_Set_Name__Facebook_Ads'].values:
+                  delete_query = """
+                  DELETE FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage`
+                  WHERE Ad_Set = @ad_set_value
+                  AND Type = 'Past'
+                  """
+        else:
+                  st.error("Ad_Set does not exist")
 
         # Configure query parameters
         job_config = bigquery.QueryJobConfig(
