@@ -26,6 +26,38 @@ def password_protection():
   else:
       main_dashboard()
 
+def update_ad_set_table(new_ad_set_name):
+    # Query to find the current Ad-Set
+    query = """
+    SELECT Ad_Set FROM your_dataset.your_table WHERE Type = 'Current'
+    """
+    current_ad_set = client.query(query).result().to_dataframe()
+
+    # If current Ad-Set exists, update it to 'Past'
+    if not current_ad_set.empty:
+        update_query = """
+        UPDATE your_dataset.your_table
+        SET Type = 'Past'
+        WHERE Ad_Set = @current_ad_set
+        """
+        job_config = bigquery.QueryJobConfig(
+            query_parameters=[
+                bigquery.ScalarQueryParameter("current_ad_set", "STRING", current_ad_set.iloc[0]['Ad_Set'])
+            ]
+        )
+        client.query(update_query, job_config=job_config).result()
+
+    # Insert the new Ad-Set with Type 'Current'
+    insert_query = """
+    INSERT INTO your_dataset.your_table (Ad_Set, Type) VALUES (@new_ad_set, 'Current')
+    """
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("new_ad_set", "STRING", new_ad_set_name)
+        ]
+    )
+    client.query(insert_query, job_config=job_config).result()
+
 ### Code for past tests function ###
 def process_ad_set_data(data, ad_set):
     # Filter data for the specific ad set
