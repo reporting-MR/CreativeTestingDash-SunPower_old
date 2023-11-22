@@ -84,16 +84,11 @@ def delete_ad_set(ad_set_value_to_delete):
                           bigquery.ScalarQueryParameter("ad_set_value", "STRING", ad_set_value_to_delete)
                       ]
                   )
-
-        # Execute the query
-        client.query(delete_query, job_config=job_config).result()
-        st.experimental_rerun()
+                  # Execute the query
+                  client.query(delete_query, job_config=job_config).result()
+                  st.experimental_rerun()
         else:
                   st.error("Ad_Set does not exist")
-
-        # Execute the query
-        client.query(delete_query, job_config=job_config).result()
-        st.experimental_rerun()
           
 ### Code for past tests function ###
 def process_ad_set_data(data, ad_set):
