@@ -62,6 +62,7 @@ def update_ad_set_table(new_ad_set_name):
         ]
     )
     client.query(insert_query, job_config=job_config).result()
+    st.experimental_rerun()
 
 def update_ad_set_if_exists(new_ad_set_name, full_data):
     if new_ad_set_name in full_data['Ad_Set_Name__Facebook_Ads'].values:
@@ -85,9 +86,7 @@ def delete_ad_set(ad_set_value_to_delete):
 
         # Execute the query
         client.query(delete_query, job_config=job_config).result()
-
-        # Maybe return a status or message indicating success
-        return "Row deleted successfully."
+        st.experimental_rerun()
           
 ### Code for past tests function ###
 def process_ad_set_data(data, ad_set):
