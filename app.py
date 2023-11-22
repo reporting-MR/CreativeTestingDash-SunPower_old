@@ -69,6 +69,27 @@ def update_ad_set_if_exists(new_ad_set_name, full_data):
     else:
         st.error("Ad_Set does not exist.")
 
+def delete_ad_set(ad_set_value_to_delete):
+    try:
+        # SQL statement for deletion
+        delete_query = """
+        DELETE FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage`
+        WHERE Ad_Set = @ad_set_value
+        """
+
+        # Configure query parameters
+        job_config = bigquery.QueryJobConfig(
+            query_parameters=[
+                bigquery.ScalarQueryParameter("ad_set_value", "STRING", ad_set_value_to_delete)
+            ]
+        )
+
+        # Execute the query
+        client.query(delete_query, job_config=job_config).result()
+
+        # Maybe return a status or message indicating success
+        return "Row deleted successfully."
+
 ### Code for past tests function ###
 def process_ad_set_data(data, ad_set):
     # Filter data for the specific ad set
@@ -317,8 +338,9 @@ def main_dashboard():
   # Dictionary to store DataFrames for each ad set
   ad_set_dfs = {}
 
-  #remove_ad_set = st.text_input("Enter Past Ad Set Name to remove")
-  #if st.button("Update Ad Set"):
+  remove_ad_set = st.text_input("Enter Past Ad Set Name to remove")
+  if st.button("Update Ad Set"):
+          delete_ad_set(remove_ad_set)
       
 
   for ad_set in past_tests:
