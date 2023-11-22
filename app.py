@@ -59,7 +59,7 @@ def update_ad_set_table(new_ad_set_name):
     client.query(insert_query, job_config=job_config).result()
 
 def update_ad_set_if_exists(new_ad_set_name, full_data):
-    if new_ad_set_name in full_data['Ad_Set'].values:
+    if new_ad_set_name in full_data['Ad_Set_Name__Facebook_Ads'].values:
         update_ad_set_table(new_ad_set_name)  # Assuming this is the function you use to update BigQuery
     else:
         st.error("Ad_Set does not exist.")
