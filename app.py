@@ -322,17 +322,13 @@ def main_dashboard():
   final_df = final_df[column_order]
 
   final_df.reset_index(drop=True, inplace=True)
-  
-  # Display the aggregated data
-  st.dataframe(final_df, width=2000)
 
-  # Initialize lists to store uploaded images and captions
   uploaded_images = []
   image_captions = []
-
+          
   with st.expander("Upload Images"):        
             # Allow users to upload multiple images
-            uploaded_file = st.file_uploader("Upload all images at the same time (shift+click)", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
+            uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
 
             # Process each uploaded file
             for file in uploaded_file:
@@ -344,30 +340,13 @@ def main_dashboard():
                     # Get caption for each image
                     caption = st.text_input(f"Enter caption for image {len(uploaded_images)}", key=f"caption_{len(uploaded_images)}")
                     image_captions.append(caption)
+          
+  # Display the aggregated data
+  st.dataframe(final_df, width=2000)
 
   # Display images with captions if both are provided
   if uploaded_images and all(image_captions):
             display_images(uploaded_images, image_captions)
-  
-  #col1, col2, col3, col4, col5, col6 = st.columns(6)
-  
-  #with col1:
-  #  st.write("")
-    
-  #with col2:
-  #  st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyWarrantyVariant.png?raw=true', caption = "Shelbi Warranty Variant")
-
-  #with col3:
-  #  st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCredit.png?raw=true', caption = "Shelbi Tax Credit")
-
-  #with col4:
-  #  st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyTaxCreditVariant.png?raw=true', caption = "Shelbi Tax Credit Variant")
-
-  #with col5:
-  #  st.image('https://github.com/reporting-MR/CreativeTestingDash/blob/main/ShelbyWarranty.png?raw=true', caption = "Shelbi Warranty")
-
-  #with col6:
-  #  st.write("")
 
   st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
   
