@@ -6,6 +6,7 @@ from google.oauth2 import service_account
 from google.cloud import bigquery
 from datetime import datetime, timedelta
 from scipy.stats import chi2_contingency
+from PIL import Image
 
 st.set_page_config(page_title="SunPower Creative Ad Testing Dash",page_icon="🧑‍🚀",layout="wide")
 
@@ -313,6 +314,19 @@ def main_dashboard():
   
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
+
+  # File uploader widget
+  uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'])
+
+  if uploaded_file is not None:
+      # To read file as bytes:
+      bytes_data = uploaded_file.getvalue()
+    
+      # To convert to a PIL Image object (if it's an image file):
+      image = Image.open(uploaded_file)
+
+      # Display the image
+      st.image(image, caption='Uploaded Image.', use_column_width=True)
   
   #col1, col2, col3, col4, col5, col6 = st.columns(6)
   
