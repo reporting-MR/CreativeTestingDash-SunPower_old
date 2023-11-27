@@ -330,23 +330,24 @@ def main_dashboard():
   uploaded_images = []
   image_captions = []
 
-  # Allow users to upload multiple images
-  uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
+  with st.expander("Upload Images"):        
+            # Allow users to upload multiple images
+            uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
 
-  # Process each uploaded file
-  for file in uploaded_file:
-      if file is not None:
-          # Convert to PIL Image
-          image = Image.open(file)
-          uploaded_images.append(image)
+            # Process each uploaded file
+            for file in uploaded_file:
+                if file is not None:
+                    # Convert to PIL Image
+                    image = Image.open(file)
+                    uploaded_images.append(image)
 
-          # Get caption for each image
-          caption = st.text_input(f"Enter caption for image {len(uploaded_images)}", key=f"caption_{len(uploaded_images)}")
-          image_captions.append(caption)
+                    # Get caption for each image
+                    caption = st.text_input(f"Enter caption for image {len(uploaded_images)}", key=f"caption_{len(uploaded_images)}")
+                    image_captions.append(caption)
 
-  # Display images with captions if both are provided
-  if uploaded_images and all(image_captions):
-      display_images(uploaded_images, image_captions)
+            # Display images with captions if both are provided
+            if uploaded_images and all(image_captions):
+                display_images(uploaded_images, image_captions)
   
   #col1, col2, col3, col4, col5, col6 = st.columns(6)
   
