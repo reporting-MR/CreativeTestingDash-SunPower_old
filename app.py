@@ -326,9 +326,6 @@ def main_dashboard():
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
 
-  # File uploader widget
-  uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'])
-
   # Initialize lists to store uploaded images and captions
   uploaded_images = []
   image_captions = []
