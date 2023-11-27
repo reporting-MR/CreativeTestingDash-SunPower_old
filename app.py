@@ -332,7 +332,7 @@ def main_dashboard():
 
   with st.expander("Upload Images"):        
             # Allow users to upload multiple images
-            uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
+            uploaded_file = st.file_uploader("Upload all images at the same time (shift+click)", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
 
             # Process each uploaded file
             for file in uploaded_file:
