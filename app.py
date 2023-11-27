@@ -174,6 +174,17 @@ def process_ad_set_data(data, ad_set):
 
     return final_df
 
+# Function to create columns and display images with captions
+def display_images(images, captions):
+    num_images = len(images)
+    cols = st.beta_columns(num_images + 2)  # Extra columns for white space
+
+    # Display images in the center columns
+    for idx, image in enumerate(images):
+        with cols[idx + 1]:  # +1 for offset due to initial white space
+            st.image(image, caption=captions[idx])
+
+
 def main_dashboard():
   st.markdown("<h1 style='text-align: center;'>SunPower Creative Ad Testing</h1>", unsafe_allow_html=True)
   st.markdown("<h2 style='text-align: center;'>Current Test</h2>", unsafe_allow_html=True)
@@ -318,15 +329,27 @@ def main_dashboard():
   # File uploader widget
   uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'])
 
-  if uploaded_file is not None:
-      # To read file as bytes:
-      bytes_data = uploaded_file.getvalue()
-    
-      # To convert to a PIL Image object (if it's an image file):
-      image = Image.open(uploaded_file)
+  # Initialize lists to store uploaded images and captions
+  uploaded_images = []
+  image_captions = []
 
-      # Display the image
-      st.image(image, caption='Uploaded Image.', use_column_width=True)
+  # Allow users to upload multiple images
+  uploaded_file = st.file_uploader("Choose an image...", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
+
+  # Process each uploaded file
+  for file in uploaded_file:
+      if file is not None:
+          # Convert to PIL Image
+          image = Image.open(file)
+          uploaded_images.append(image)
+
+          # Get caption for each image
+          caption = st.text_input(f"Enter caption for image {len(uploaded_images)}", key=f"caption_{len(uploaded_images)}")
+          image_captions.append(caption)
+
+  # Display images with captions if both are provided
+  if uploaded_images and all(image_captions):
+      display_images(uploaded_images, image_captions)
   
   #col1, col2, col3, col4, col5, col6 = st.columns(6)
   
