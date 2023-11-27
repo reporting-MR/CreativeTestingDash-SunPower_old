@@ -177,7 +177,7 @@ def process_ad_set_data(data, ad_set):
 # Function to create columns and display images with captions
 def display_images(images, captions):
     num_images = len(images)
-    cols = st.beta_columns(num_images + 2)  # Extra columns for white space
+    cols = st.columns(num_images + 2)  # Extra columns for white space
 
     # Display images in the center columns
     for idx, image in enumerate(images):
