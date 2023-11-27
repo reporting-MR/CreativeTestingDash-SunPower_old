@@ -328,6 +328,7 @@ def main_dashboard():
           
   with st.expander("Upload Images"):        
             # Allow users to upload multiple images
+            st.write("*Note... images will not be saved, refreshing or exiting the page will reset the display")
             uploaded_file = st.file_uploader("Select all images of tests at the same time (Shift+Select)", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
 
             # Process each uploaded file
