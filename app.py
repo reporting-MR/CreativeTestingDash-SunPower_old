@@ -345,9 +345,9 @@ def main_dashboard():
                     caption = st.text_input(f"Enter caption for image {len(uploaded_images)}", key=f"caption_{len(uploaded_images)}")
                     image_captions.append(caption)
 
-            # Display images with captions if both are provided
-            if uploaded_images and all(image_captions):
-                display_images(uploaded_images, image_captions)
+  # Display images with captions if both are provided
+  if uploaded_images and all(image_captions):
+            display_images(uploaded_images, image_captions)
   
   #col1, col2, col3, col4, col5, col6 = st.columns(6)
   
