@@ -271,7 +271,7 @@ def main_dashboard():
   total['CPM'] = (total['Cost']/total['Impressions'])*1000
   total['CTR'] = total['Clicks']/total['Impressions']
   total['CVR'] = total['Leads']/total['Clicks']
-  total['CPL'] = total['Leads']/total['Cost']
+  total['CPL'] = total['Cost']/total['Leads']
   total['Ad_Name'] = ""
   total['Ad_Set'] = 'Total'
   
@@ -280,7 +280,7 @@ def main_dashboard():
   aggregated_data['CPM'] = (aggregated_data['Cost']/aggregated_data['Impressions'])*1000
   aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
   aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
-  aggregated_data['CPL'] = aggregated_data['Leads']/aggregated_data['Cost']
+  aggregated_data['CPL'] = aggregated_data['Cost']/aggregated_data['Leads']
 
   #Sort leads so highest performer is at the top
   aggregated_data.sort_values(by='Leads', ascending=False, inplace=True)
