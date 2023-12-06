@@ -115,59 +115,62 @@ def process_ad_set_data(data, ad_set):
     grouped_data = filtered_data.groupby(['Ad_Set', 'Ad_Name']).sum()
     aggregated_data = grouped_data.reset_index()
 
+    
     total = aggregated_data.sum(numeric_only=True)
     total['CPC'] = total['Cost']/total['Clicks']
     total['CPM'] = (total['Cost']/total['Impressions'])*1000
     total['CTR'] = total['Clicks']/total['Impressions']
     total['CVR'] = total['Leads']/total['Clicks']
+    total['CPL'] = total['Cost']/total['Leads']
     total['Ad_Name'] = ""
     total['Ad_Set'] = 'Total'
-    
+  
     #Calculate cols
     aggregated_data['CPC'] = aggregated_data['Cost']/aggregated_data['Clicks']
     aggregated_data['CPM'] = (aggregated_data['Cost']/aggregated_data['Impressions'])*1000
     aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
     aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
-  
+    aggregated_data['CPL'] = aggregated_data['Cost']/aggregated_data['Leads']
+
     #Sort leads so highest performer is at the top
     aggregated_data.sort_values(by='Leads', ascending=False, inplace=True)
   
     total_df = pd.DataFrame([total])
     # Reorder columns in total_df to match aggregated_data
-    total_df = total_df[['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Leads', 'CPC', 'CPM', 'CTR', 'CVR']]
-  
+    total_df = total_df[['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Leads', 'CPL', 'CPC', 'CPM', 'CTR', 'CVR']]
+
     # Concatenate aggregated_data with total_df
     final_df = pd.concat([aggregated_data, total_df])
-  
+
     # Initialize an empty list to store significance results
     significance_results = []
-    
+  
     # Top row data for comparison
-    top_ad_clicks = final_df.iloc[0]['Clicks']
+    top_ad_leads = final_df.iloc[0]['Leads']
     top_ad_impressions = final_df.iloc[0]['Impressions']
-    
+  
     # Iterate through each row except the first and last
     for index, row in final_df.iloc[1:-1].iterrows():
-        variant_clicks = row['Clicks']
+        variant_leads = row['Leads']
         variant_impressions = row['Impressions']
-    
+  
         # Chi-square test
         chi2, p_value, _, _ = chi2_contingency([
-            [top_ad_clicks, top_ad_impressions - top_ad_clicks],
-            [variant_clicks, variant_impressions - variant_clicks]
+            [top_ad_leads, top_ad_impressions - top_ad_leads],
+            [variant_leads, variant_impressions - variant_leads]
         ])
-    
+  
         # Check if the result is significant and store the result
         significance_label = f"{p_value:.3f} - {'Significant' if p_value < 0.05 else 'Not significant'}"
         significance_results.append(significance_label)
-  
+
     # Add a placeholder for the top row and append for the total row
     significance_results = [''] + significance_results + ['']
-    
-    # Add the significance results to the DataFrame
-    final_df['Click Significance'] = significance_results
   
-    column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR', 'Click Significance']
+    # Add the significance results to the DataFrame
+    final_df['Significance'] = significance_results
+
+    column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPL', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR', 'Significance']
     final_df = final_df[column_order]
   
     final_df.reset_index(drop=True, inplace=True)
