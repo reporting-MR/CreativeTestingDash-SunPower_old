@@ -306,8 +306,8 @@ def main_dashboard():
   
       # Chi-square test
       chi2, p_value, _, _ = chi2_contingency([
-          [top_ad_clicks, top_ad_impressions - top_ad_leads],
-          [variant_clicks, variant_impressions - variant_leads]
+          [top_ad_leads, top_ad_impressions - top_ad_leads],
+          [variant_leads, variant_impressions - variant_leads]
       ])
   
       # Check if the result is significant and store the result
