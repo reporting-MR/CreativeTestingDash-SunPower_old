@@ -271,6 +271,7 @@ def main_dashboard():
   total['CPM'] = (total['Cost']/total['Impressions'])*1000
   total['CTR'] = total['Clicks']/total['Impressions']
   total['CVR'] = total['Leads']/total['Clicks']
+  total['CPL'] = total['Leads']/total['Cost']
   total['Ad_Name'] = ""
   total['Ad_Set'] = 'Total'
   
@@ -279,13 +280,14 @@ def main_dashboard():
   aggregated_data['CPM'] = (aggregated_data['Cost']/aggregated_data['Impressions'])*1000
   aggregated_data['CTR'] = aggregated_data['Clicks']/aggregated_data['Impressions']
   aggregated_data['CVR'] = aggregated_data['Leads']/aggregated_data['Clicks']
+  aggregated_data['CPL'] = aggregated_data['Leads']/aggregated_data['Cost']
 
   #Sort leads so highest performer is at the top
   aggregated_data.sort_values(by='Leads', ascending=False, inplace=True)
   
   total_df = pd.DataFrame([total])
   # Reorder columns in total_df to match aggregated_data
-  total_df = total_df[['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Leads', 'CPC', 'CPM', 'CTR', 'CVR']]
+  total_df = total_df[['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Leads', 'CPL', 'CPC', 'CPM', 'CTR', 'CVR']]
 
   # Concatenate aggregated_data with total_df
   final_df = pd.concat([aggregated_data, total_df])
@@ -294,18 +296,18 @@ def main_dashboard():
   significance_results = []
   
   # Top row data for comparison
-  top_ad_clicks = final_df.iloc[0]['Clicks']
+  top_ad_leads = final_df.iloc[0]['Leads']
   top_ad_impressions = final_df.iloc[0]['Impressions']
   
   # Iterate through each row except the first and last
   for index, row in final_df.iloc[1:-1].iterrows():
-      variant_clicks = row['Clicks']
+      variant_leads = row['Leads']
       variant_impressions = row['Impressions']
   
       # Chi-square test
       chi2, p_value, _, _ = chi2_contingency([
-          [top_ad_clicks, top_ad_impressions - top_ad_clicks],
-          [variant_clicks, variant_impressions - variant_clicks]
+          [top_ad_clicks, top_ad_impressions - top_ad_leads],
+          [variant_clicks, variant_impressions - variant_leads]
       ])
   
       # Check if the result is significant and store the result
@@ -316,9 +318,9 @@ def main_dashboard():
   significance_results = [''] + significance_results + ['']
   
   # Add the significance results to the DataFrame
-  final_df['Click Significance'] = significance_results
+  final_df['Significance'] = significance_results
 
-  column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR', 'Click Significance']
+  column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPL', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR', 'Significance']
   final_df = final_df[column_order]
 
   final_df.reset_index(drop=True, inplace=True)
