@@ -9,6 +9,8 @@ from scipy.stats import chi2_contingency
 from PIL import Image
 from git import Repo
 
+Git_token = "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"
+
 st.set_page_config(page_title="SunPower Creative Ad Testing Dash",page_icon="🧑‍🚀",layout="wide")
 
 credentials = service_account.Credentials.from_service_account_info(
