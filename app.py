@@ -191,7 +191,6 @@ def get_ad_names(ad_set_name, ad_data):
     for ad_name in ad_names:
           image_name = f'{ad_name}.jpg'
           image_paths.append(image_name)
-          break
     return image_paths
     
 
