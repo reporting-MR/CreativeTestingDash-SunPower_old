@@ -37,6 +37,28 @@ def password_protection():
   else:
       main_dashboard()
 
+def upload_file_to_github(file, file_path, token):
+    """
+    Upload a file to a specified path in the GitHub repository.
+    """
+    # Encode the file in Base64
+    content = base64.b64encode(file.read()).decode()
+
+    # Prepare the request payload
+    payload = {
+        "message": "Upload file via Streamlit app",
+        "content": content
+    }
+
+    # Define the API endpoint
+    url = f"https://api.github.com/repos/reporting-MR/CreativeTestingDash/contents/{file_path}"
+
+    # Send the request
+    headers = {'Authorization': f'token {token}'}
+    response = requests.put(url, json=payload, headers=headers)
+
+    return response
+
 def update_ad_set_table(new_ad_set_name):
     # Query to find the current Ad-Set
     query = """
@@ -398,6 +420,21 @@ def main_dashboard():
           st.dataframe(ad_set_dfs[ad_set], width=2000)
           ad_names = get_ad_names(ad_set, st.session_state.full_data)
           display_images(ad_names, ad_names)
+
+# Streamlit interface
+uploaded_file = st.file_uploader("Upload an image", type=['png', 'jpg', 'jpeg'])
+if uploaded_file is not None:
+    # Define GitHub parameters 
+    token = Git_token  # Access token stored in st.secrets
+    file_path = uploaded_file.name  # Define the upload path and filename
+
+    # Upload the file
+    response = upload_file_to_github(uploaded_file, file_path, repo, token)
+
+    if response.status_code == 201:
+        st.success("Uploaded successfully!")
+    else:
+        st.error(f"Failed to upload: {response.content}")
 
 if __name__ == '__main__':
     password_protection()
