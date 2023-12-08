@@ -203,7 +203,7 @@ def display_images(images, captions):
     # Display images in the center columns
     for idx, image in enumerate(images):
         with cols[idx + 1]:  # +1 for offset due to initial white space
-            st.image(image, caption=captions[idx])
+            st.image(image, caption=captions[idx], use_column_width=True)
 
 
 def main_dashboard():
