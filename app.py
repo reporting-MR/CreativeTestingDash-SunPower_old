@@ -182,7 +182,7 @@ def process_ad_set_data(data, ad_set):
 
 def get_images_for_ad_set(ad_set_name, ad_data):
     # Retrieve all ad names from the given ad set
-    ad_names = ad_data[ad_data['Ad_Set'] == ad_set_name]['Ad_Name'].tolist()
+    ad_names = ad_data[ad_data['Ad_Set_Name__Facebook_Ads'] == ad_set_name]['Ad_Name__Facebook_Ads'].tolist()
 
     # List of image paths
     image_paths = []
