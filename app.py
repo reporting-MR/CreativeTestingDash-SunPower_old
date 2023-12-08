@@ -188,7 +188,7 @@ def get_images_for_ad_set(ad_set_name, ad_data):
     image_paths = []
 
      # Iterate through each ad name and find corresponding images
-     for ad_name in ad_names:
+    for ad_name in ad_names:
           image_name = f'{ad_name}.jpg'
           for file in repo_files:
                 if file['name'] == image_name:
