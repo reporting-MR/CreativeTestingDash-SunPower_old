@@ -180,7 +180,7 @@ def process_ad_set_data(data, ad_set):
 
     return final_df
 
-def get_images_for_ad_set(ad_set_name, ad_data):
+def get_ad_names(ad_set_name, ad_data):
     # Retrieve all ad names from the given ad set
     ad_names = ad_data[ad_data['Ad_Set_Name__Facebook_Ads'] == ad_set_name]['Ad_Name__Facebook_Ads'].tolist()
 
@@ -190,11 +190,8 @@ def get_images_for_ad_set(ad_set_name, ad_data):
      # Iterate through each ad name and find corresponding images
     for ad_name in ad_names:
           image_name = f'{ad_name}.jpg'
-          for file in repo_files:
-                if file['name'] == image_name:
-                     image_paths.append(file['download_url'])
-                     break
-
+          image_paths.append(image_name)
+          break
     return image_paths
     
 
