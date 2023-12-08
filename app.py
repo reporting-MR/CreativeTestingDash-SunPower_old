@@ -180,6 +180,24 @@ def process_ad_set_data(data, ad_set):
 
     return final_df
 
+def get_images_for_ad_set(ad_set_name, ad_data):
+    # Retrieve all ad names from the given ad set
+    ad_names = ad_data[ad_data['Ad_Set'] == ad_set_name]['Ad_Name'].tolist()
+
+    # List of image paths
+    image_paths = []
+
+     # Iterate through each ad name and find corresponding images
+     for ad_name in ad_names:
+          image_name = f'{ad_name}.jpg'
+          for file in repo_files:
+                if file['name'] == image_name:
+                     image_paths.append(file['download_url'])
+                     break
+
+    return image_paths
+    
+
 # Function to create columns and display images with captions
 def display_images(images, captions):
     num_images = len(images)
@@ -375,6 +393,7 @@ def main_dashboard():
   for ad_set in past_tests:
       with st.expander(f"Show Data for {ad_set}"):
           st.dataframe(ad_set_dfs[ad_set], width=2000)
+          st.write(get_images_for_ad_set(ad_set, st.session_state.full_data))
 
 if __name__ == '__main__':
     password_protection()
