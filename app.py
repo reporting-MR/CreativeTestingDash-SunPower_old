@@ -367,6 +367,7 @@ def main_dashboard():
           
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
+  display_images(final_df["Ad_Name"], final_df["Ad_Name"])          
 
   # Display images with captions if both are provided
   if uploaded_images and all(image_captions):
