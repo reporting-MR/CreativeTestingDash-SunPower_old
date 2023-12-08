@@ -429,7 +429,7 @@ def main_dashboard():
       file_path = uploaded_file.name  # Define the upload path and filename
 
       # Upload the file
-      response = upload_file_to_github(uploaded_file, file_path, repo, token)
+      response = upload_file_to_github(uploaded_file, file_path, token)
 
       if response.status_code == 201:
           st.success("Uploaded successfully!")
