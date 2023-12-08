@@ -8,6 +8,8 @@ from datetime import datetime, timedelta
 from scipy.stats import chi2_contingency
 from PIL import Image
 from git import Repo
+import base64
+import requests
 
 Git_token = "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"
 
