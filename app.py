@@ -370,7 +370,8 @@ def main_dashboard():
   #ct_images = final_df["Ad_Name"]
   #filtered_list = [item for item in ct_images if item is not None]
   final_adset = get_ad_names(final_df["Ad_Set"].iloc(0), st.session_state.full_data)
-  display_images(final_adset, final_adset)          
+  display_images(final_adset, final_adset)        
+  st.write(final_df["Ad_Set"].iloc(0))
 
   # Display images with captions if both are provided
   if uploaded_images and all(image_captions):
