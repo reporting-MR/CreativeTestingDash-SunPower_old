@@ -30,8 +30,11 @@ def generate_signed_url(bucket_name, object_name):
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(object_name)
 
-    # Generate a signed URL for the blob that expires in one hour
-    signed_url = blob.generate_signed_url(expiration=3600)  # Expires in 1 hour
+    # Set the expiration time for the signed URL
+    expiration_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
+
+    # Generate a signed URL
+    signed_url = blob.generate_signed_url(expiration=expiration_time)
     return signed_url
 
 def initialize_storage_client():
