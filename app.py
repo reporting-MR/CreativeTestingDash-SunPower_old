@@ -431,6 +431,12 @@ def main_dashboard():
       # Upload the file
       response = upload_file_to_github(uploaded_file, file_path, token)
 
+      print(f"Token: {token[:4]}...")  # Prints first few characters for verification
+      print(f"File path: {file_path}")
+      print(f"Response status code: {response.status_code}")
+      print(f"Response content: {response.content}")
+
+
       if response.status_code == 201:
           st.success("Uploaded successfully!")
       else:
