@@ -11,6 +11,7 @@ from git import Repo
 import base64
 import requests
 import json
+from google.cloud import storage
 
 Git_token = "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"
 
@@ -20,6 +21,16 @@ credentials = service_account.Credentials.from_service_account_info(
           st.secrets["gcp_service_account"]
       )
 client = bigquery.Client(credentials=credentials)
+
+def initialize_storage_client():
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"]
+    )
+    storage_client = storage.Client(credentials=credentials)
+    return storage_client
+
+# Use this client for GCS operations
+storage_client = initialize_storage_client()
 
 def password_protection():
   if 'authenticated' not in st.session_state:
@@ -422,45 +433,7 @@ def main_dashboard():
           ad_names = get_ad_names(ad_set, st.session_state.full_data)
           display_images(ad_names, ad_names)
 
-  # Streamlit interface
-  uploaded_file = st.file_uploader("Upload an image", type=['png', 'jpg', 'jpeg'])
-
-  url = f"https://api.github.com/repos/reporting-MR/CreativeTestingDash"
-  headers = {'Authorization': f'token {Git_token}'}
-  response = requests.get(url, headers=headers)
-
-  if response.status_code == 200:
-      # Connection successful, print repository details
-      repo_details = response.json()
-      st.write(json.dumps(repo_details, indent=2))
-      return True
-  else:
-      # Failed to connect, print error message
-      st.write(f"Failed to connect: {response.content}")
-      return False
-
-          
-  if uploaded_file is not None:
-      # Define GitHub parameters 
-      token = Git_token  # Access token stored in st.secrets
-      file_path = uploaded_file.name  # Define the upload path and filename
-
-      # Upload the file
-      response = upload_file_to_github(uploaded_file, file_path, token)
-
-      st.write(f"Token: {token[:4]}...")  # Prints first few characters for verification
-      st.write(f"File path: {file_path}")
-      st.write(f"Response status code: {response.status_code}")
-      st.write(f"Response content: {response.text}")
-
-
-      if response.status_code == 201:
-          st.success("Uploaded successfully!")
-      else:
-          st.error(f"Failed to upload: {response.content}")
-
-
-
+  storage_client = initialize_storage_client()
 
 if __name__ == '__main__':
     password_protection()
