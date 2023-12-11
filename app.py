@@ -462,8 +462,9 @@ def main_dashboard():
 
   # Display the image using the signed URL
   st.image(signed_url, caption="Image from GCS")
-  
 
+  st.write("Signed URL:", signed_url)
+  
 if __name__ == '__main__':
     password_protection()
 
