@@ -440,14 +440,11 @@ def main_dashboard():
       st.secrets["gcp_service_account"]
   )
   storage_client = storage.Client(credentials=credentials)
-
-  try:
-      # List all buckets
-      buckets = storage_client.list_buckets()
-      bucket_names = [bucket.name for bucket in buckets]
-      st.write('Buckets:', bucket_names)
-  except Exception as e:
-      st.error(f'Error: {e}')
+  bucket = storage_client.get_bucket(bucket_name)
+  blobs = bucket.list_blobs()
+  file_names = [blob.name for blob in blobs]
+  st.write(f'Files in {bucket_name}:', file_names)
+  
 
 if __name__ == '__main__':
     password_protection()
