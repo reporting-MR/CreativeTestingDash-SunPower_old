@@ -13,7 +13,6 @@ import requests
 import json
 from google.cloud import storage
 
-Git_token = "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"
 
 st.set_page_config(page_title="SunPower Creative Ad Testing Dash",page_icon="🧑‍🚀",layout="wide")
 
@@ -21,6 +20,19 @@ credentials = service_account.Credentials.from_service_account_info(
           st.secrets["gcp_service_account"]
       )
 client = bigquery.Client(credentials=credentials)
+
+def generate_signed_url(bucket_name, object_name):
+    # Initialize Google Cloud Storage client with credentials from st.secrets
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"]
+    )
+    storage_client = storage.Client(credentials=credentials)
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(object_name)
+
+    # Generate a signed URL for the blob that expires in one hour
+    signed_url = blob.generate_signed_url(expiration=3600)  # Expires in 1 hour
+    return signed_url
 
 def initialize_storage_client():
     credentials = service_account.Credentials.from_service_account_info(
@@ -440,10 +452,16 @@ def main_dashboard():
       st.secrets["gcp_service_account"]
   )
   storage_client = storage.Client(credentials=credentials)
-  bucket = storage_client.get_bucket("creativetesting_images")
-  blobs = bucket.list_blobs()
-  file_names = [blob.name for blob in blobs]
-  st.write(f'Files in creativetesting_images:', file_names)
+
+  bucket_name = "creativetesting_images"
+  object_name = "batch-23-energy-bill_video_ugc_white-block_savings_electric-bill_savings_bill-after_PID.jpg"  # Replace with the path to your image in the bucket
+
+
+  # Generate signed URL
+  signed_url = generate_signed_url(bucket_name, object_name)
+
+  # Display the image using the signed URL
+  st.image(signed_url, caption="Image from GCS")
   
 
 if __name__ == '__main__':
