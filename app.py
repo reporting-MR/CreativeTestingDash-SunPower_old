@@ -443,7 +443,7 @@ def main_dashboard():
   bucket = storage_client.get_bucket("creativetesting_images")
   blobs = bucket.list_blobs()
   file_names = [blob.name for blob in blobs]
-  st.write(f'Files in {bucket_name}:', file_names)
+  st.write(f'Files in creativetesting_images:', file_names)
   
 
 if __name__ == '__main__':
