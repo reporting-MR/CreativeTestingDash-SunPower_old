@@ -440,7 +440,7 @@ def main_dashboard():
       st.secrets["gcp_service_account"]
   )
   storage_client = storage.Client(credentials=credentials)
-  bucket = storage_client.get_bucket(bucket_name)
+  bucket = storage_client.get_bucket("creativetesting_images")
   blobs = bucket.list_blobs()
   file_names = [blob.name for blob in blobs]
   st.write(f'Files in {bucket_name}:', file_names)
