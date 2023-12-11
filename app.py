@@ -10,6 +10,7 @@ from PIL import Image
 from git import Repo
 import base64
 import requests
+import json
 
 Git_token = "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"
 
@@ -423,6 +424,22 @@ def main_dashboard():
 
   # Streamlit interface
   uploaded_file = st.file_uploader("Upload an image", type=['png', 'jpg', 'jpeg'])
+
+  url = f"https://api.github.com/repos/reporting-MR/CreativeTestingDash"
+  headers = {'Authorization': f'token {Git_token}'}
+  response = requests.get(url, headers=headers)
+
+  if response.status_code == 200:
+      # Connection successful, print repository details
+      repo_details = response.json()
+      st.write(json.dumps(repo_details, indent=2))
+      return True
+  else:
+      # Failed to connect, print error message
+      st.write(f"Failed to connect: {response.content}")
+      return False
+
+          
   if uploaded_file is not None:
       # Define GitHub parameters 
       token = Git_token  # Access token stored in st.secrets
@@ -441,6 +458,9 @@ def main_dashboard():
           st.success("Uploaded successfully!")
       else:
           st.error(f"Failed to upload: {response.content}")
+
+
+
 
 if __name__ == '__main__':
     password_protection()
