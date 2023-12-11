@@ -435,19 +435,19 @@ def main_dashboard():
 
   storage_client = initialize_storage_client()
 
-# Assuming you have already set up st.secrets with your GCP credentials
-credentials = service_account.Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"]
-)
-storage_client = storage.Client(credentials=credentials)
+  # Assuming you have already set up st.secrets with your GCP credentials
+  credentials = service_account.Credentials.from_service_account_info(
+      st.secrets["gcp_service_account"]
+  )
+  storage_client = storage.Client(credentials=credentials)
 
-try:
-    # List all buckets
-    buckets = storage_client.list_buckets()
-    bucket_names = [bucket.name for bucket in buckets]
-    st.write('Buckets:', bucket_names)
-except Exception as e:
-    st.error(f'Error: {e}')
+  try:
+      # List all buckets
+      buckets = storage_client.list_buckets()
+      bucket_names = [bucket.name for bucket in buckets]
+      st.write('Buckets:', bucket_names)
+  except Exception as e:
+      st.error(f'Error: {e}')
 
 if __name__ == '__main__':
     password_protection()
