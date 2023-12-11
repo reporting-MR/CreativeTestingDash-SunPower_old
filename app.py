@@ -11,7 +11,7 @@ from git import Repo
 import base64
 import requests
 
-Git_token = "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"
+Git_token = "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"
 
 st.set_page_config(page_title="SunPower Creative Ad Testing Dash",page_icon="🧑‍🚀",layout="wide")
 
