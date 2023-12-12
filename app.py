@@ -20,9 +20,6 @@ credentials = service_account.Credentials.from_service_account_info(
       )
 client = bigquery.Client(credentials=credentials)
 
-# Use this client for GCS operations
-storage_client = initialize_storage_client()
-
 def get_image(bucket_name, object_name):
 
     bucket_name = "creativetesting_images"
@@ -37,6 +34,9 @@ def initialize_storage_client():
     )
     storage_client = storage.Client(credentials=credentials)
     return storage_client
+
+# Use this client for GCS operations
+storage_client = initialize_storage_client()
 
 
 def password_protection():
