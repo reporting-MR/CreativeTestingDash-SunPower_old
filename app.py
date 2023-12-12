@@ -438,12 +438,12 @@ def main_dashboard():
   significance_results = [''] + significance_results + ['']
   
   # Add the significance results to the DataFrame
-  final_df['Significance'] = significance_results
+  #final_df['Significance'] = significance_results
 
-  column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPL', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR', 'Significance']
-  final_df = final_df[column_order]
+  #column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPL', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR', 'Significance']
+  #final_df = final_df[column_order]
 
-  final_df.reset_index(drop=True, inplace=True)
+  #final_df.reset_index(drop=True, inplace=True)
 
   uploaded_images = []
   image_captions = []
