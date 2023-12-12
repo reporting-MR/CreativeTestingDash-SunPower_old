@@ -221,6 +221,22 @@ def process_ad_set_data(data, ad_set):
     return final_df
 
 
+def update_current_tests(new_ad_set_name, uploaded_files, full_data, bucket_name):
+    ad_names = get_ad_names(new_ad_set_name, full_data)
+    
+    if len(uploaded_files) != len(ad_names):
+        st.error(f"Please upload exactly {len(ad_names)} images for the ad names in this set.")
+        return
+    
+    # Upload each file to GCS and update the ad set table
+    for i, file in enumerate(uploaded_files):
+        destination_blob_name = f"{new_ad_set_name}/{ad_names[i]}.jpg"  # Customize as needed
+        upload_to_gcs(bucket_name, file, destination_blob_name)
+    
+    update_ad_set_table(new_ad_set_name)  # Update the ad set table after successful uploads
+
+
+
 def get_ad_names(ad_set_name, ad_data):
     # Retrieve all ad names from the given ad set
     ad_names = ad_data[ad_data['Ad_Set_Name__Facebook_Ads'] == ad_set_name]['Ad_Name__Facebook_Ads'].tolist()
@@ -306,6 +322,7 @@ def main_dashboard():
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
   })
 
+'''          
   # Use this in your Streamlit input handling
   with st.expander('Update Current Test'):
             new_ad_set_name = st.text_input("Update Current Ad Test")
@@ -313,6 +330,20 @@ def main_dashboard():
             st.write('Need to refresh the app to see updates')
             if st.button("Update Ad Set"):
                 update_ad_set_if_exists(new_ad_set_name, st.session_state.full_data)
+'''
+
+
+  # Streamlit interface
+  with st.expander('Update Current Test and Upload Images'):
+      new_ad_set_name = st.text_input("Enter New Ad Set Name")
+      uploaded_files = st.file_uploader("Select images for the Ad Set", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
+
+      if st.button("Update Ad Set and Upload Images"):
+          if new_ad_set_name and uploaded_files:
+              update_current_tests(new_ad_set_name, uploaded_files, st.session_state.full_data, "your-bucket-name")
+          else:
+              st.error("Please enter an Ad Set name and upload the required images.")
+
 
   current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
   data = data[data['Ad_Set'] == current_Ad_Set]
@@ -390,7 +421,8 @@ def main_dashboard():
 
   uploaded_images = []
   image_captions = []
-          
+
+'''
   with st.expander("Upload Images"):        
             # Allow users to upload multiple images
             st.write("*Note... images will not be saved, refreshing or exiting the page will reset the display")
@@ -406,6 +438,8 @@ def main_dashboard():
                     # Get caption for each image
                     caption = st.text_input(f"Enter caption for image {len(uploaded_images)}", key=f"caption_{len(uploaded_images)}")
                     image_captions.append(caption)
+
+'''
           
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
