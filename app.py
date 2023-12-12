@@ -454,7 +454,7 @@ def main_dashboard():
 
   if uploaded_files is not None:
       # You might want to give the file a unique name or path in your bucket
-      destination_blob_name = f"uploads/{uploaded_files.name}"
+      destination_blob_name = f"{uploaded_files.name}"
       upload_to_gcs(bucket_name, uploaded_files, destination_blob_name)
 
   
