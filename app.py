@@ -374,7 +374,10 @@ def main_dashboard():
 
 
   current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
+  st.write(current_Ad_Set)
+  st.write(data)
   data = data[data['Ad_Set'] == current_Ad_Set]
+
 
   st.write(data)
 
