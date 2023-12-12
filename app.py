@@ -89,11 +89,21 @@ def update_ad_set_table(new_ad_set_name):
     client.query(insert_query, job_config=job_config).result()
     st.experimental_rerun()
 
-def update_ad_set_if_exists(new_ad_set_name, uploaded_files, full_data, bucket_name):
-    if new_ad_set_name in full_data['Ad_Set_Name__Facebook_Ads'].values:
-          update_current_tests(new_ad_set_name, uploaded_files, full_data, bucket_name)
-    else:
-        st.error("Ad_Set does not exist.")
+
+# Function to check ad set existence and update BigQuery
+def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_name):
+    ad_names = get_ad_names(new_ad_set_name, full_data)
+    
+    if len(uploaded_images) != len(ad_names):
+        st.error(f"Please upload exactly {len(ad_names)} images for the ad names in this set.")
+        return
+    
+    # Upload each file to GCS and update the ad set table
+    for ad_name, uploaded_file in uploaded_images.items():
+        destination_blob_name = f"{new_ad_set_name}/{ad_name}.jpg"  # Customize as needed
+        upload_to_gcs(bucket_name, uploaded_file, destination_blob_name)
+    
+    update_ad_set_table(new_ad_set_name)  # Update the ad set table after successful uploads
 
 
 
@@ -221,6 +231,7 @@ def process_ad_set_data(data, ad_set):
     return final_df
 
 
+
 def update_current_tests(new_ad_set_name, uploaded_files, full_data, bucket_name):
     ad_names = get_ad_names(new_ad_set_name, full_data)
     
@@ -333,16 +344,31 @@ def main_dashboard():
 
 
 
-  # Streamlit interface
+  # Streamlit interface for selecting new ad set
   with st.expander('Update Current Test and Upload Images'):
       new_ad_set_name = st.text_input("Enter New Ad Set Name")
-      uploaded_files = st.file_uploader("Select images for the Ad Set", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
+      uploaded_images = {}
 
-      if st.button("Update Ad Set and Upload Images"):
-          if new_ad_set_name and uploaded_files:
-              update_ad_set_if_exists(new_ad_set_name, uploaded_files, st.session_state.full_data, "your-bucket-name")
-          else:
-              st.error("Please enter an Ad Set name and upload the required images.")
+      if new_ad_set_name:
+          # Retrieve ad names for the new ad set
+          ad_names = get_ad_names(new_ad_set_name, st.session_state.full_data)
+
+          # Display file uploaders for each ad name
+          all_images_uploaded = True
+          for ad_name in ad_names:
+              uploaded_file = st.file_uploader(f"Upload image for {ad_name}", key=ad_name, type=['png', 'jpg', 'jpeg'])
+              uploaded_images[ad_name] = uploaded_file
+
+              # Check if image has been uploaded for each ad name
+              if uploaded_file is None:
+                  all_images_uploaded = False
+
+          # If all images are uploaded, process the update
+          if all_images_uploaded and st.button("Update Ad Set and Upload Images"):
+              update_ad_set_if_exists(new_ad_set_name, uploaded_images, st.session_state.full_data, "your-bucket-name")
+              st.success("Ad set updated and images uploaded successfully.")
+          elif not all_images_uploaded:
+              st.error("Please upload an image for each ad name.")
 
 
   current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
