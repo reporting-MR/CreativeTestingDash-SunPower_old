@@ -89,9 +89,9 @@ def update_ad_set_table(new_ad_set_name):
     client.query(insert_query, job_config=job_config).result()
     st.experimental_rerun()
 
-def update_ad_set_if_exists(new_ad_set_name, full_data):
+def update_ad_set_if_exists(new_ad_set_name, uploaded_files, full_data, bucket_name):
     if new_ad_set_name in full_data['Ad_Set_Name__Facebook_Ads'].values:
-        update_ad_set_table(new_ad_set_name)  # Assuming this is the function you use to update BigQuery
+          update_current_tests(new_ad_set_name, uploaded_files, full_data, bucket_name)
     else:
         st.error("Ad_Set does not exist.")
 
@@ -340,7 +340,7 @@ def main_dashboard():
 
       if st.button("Update Ad Set and Upload Images"):
           if new_ad_set_name and uploaded_files:
-              update_current_tests(new_ad_set_name, uploaded_files, st.session_state.full_data, "your-bucket-name")
+              update_ad_set_if_exists(new_ad_set_name, uploaded_files, st.session_state.full_data, "your-bucket-name")
           else:
               st.error("Please enter an Ad Set name and upload the required images.")
 
