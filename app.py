@@ -98,7 +98,7 @@ def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_
     if len(uploaded_images) != len(ad_names):
         st.error(f"Please upload exactly {len(ad_names)} images for the ad names in this set.")
         return
-    
+    st.write(uploaded_images)
     # Upload each file to GCS and update the ad set table
     for ad_name, uploaded_file in uploaded_images.items():
         destination_blob_name = f"{new_ad_set_name}/{ad_name}.jpg"  # Customize as needed
