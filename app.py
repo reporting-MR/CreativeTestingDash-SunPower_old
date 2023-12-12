@@ -121,6 +121,20 @@ def update_ad_set_if_exists(new_ad_set_name, full_data):
     else:
         st.error("Ad_Set does not exist.")
 
+def upload_to_gcs(bucket_name, source_file, destination_blob_name):
+    # Initialize the GCS client
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"]
+    )
+    client = storage.Client(credentials=credentials)
+    bucket = client.bucket(bucket_name)
+
+    # Create a new blob and upload the file's content.
+    blob = bucket.blob(destination_blob_name)
+    blob.upload_from_file(source_file, content_type='image/jpeg')  # Set content_type as per your file type
+
+    st.success(f"Uploaded file to {destination_blob_name} in bucket {bucket_name}")
+
 def delete_ad_set(ad_set_value_to_delete, full_data):
         # SQL statement for deletion
         if ad_set_value_to_delete in full_data['Ad_Set_Name__Facebook_Ads'].values:
@@ -457,6 +471,13 @@ def main_dashboard():
 
   image_data = get_image(bucket_name, object_name)
   st.image(image_data)
+
+  
+  if uploaded_file is not None:
+      # You might want to give the file a unique name or path in your bucket
+      destination_blob_name = f"uploads/{uploaded_file.name}"
+      upload_to_gcs(bucket_name, uploaded_file, destination_blob_name)
+
   
 if __name__ == '__main__':
     password_protection()
