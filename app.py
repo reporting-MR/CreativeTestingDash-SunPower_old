@@ -432,28 +432,7 @@ def main_dashboard():
           ad_names = get_ad_names(ad_set, st.session_state.full_data)
           display_images(ad_names, ad_names)
 
-  storage_client = initialize_storage_client()
 
-  # Assuming you have already set up st.secrets with your GCP credentials
-  credentials = service_account.Credentials.from_service_account_info(
-      st.secrets["gcp_service_account"]
-  )
-  storage_client = storage.Client(credentials=credentials)
-
-  bucket_name = "creativetesting_images"
-  object_name = "batch-23-energy-bill_video_ugc_white-block_savings_electric-bill_savings_bill-after_PID.jpg"  # Replace with the path to your image in the bucket
-
-  image_data = get_image(bucket_name, object_name)
-  st.image(image_data)
-
-  uploaded_files = st.file_uploader("Upload image)", type=['png', 'jpg', 'jpeg'])
-
-  if uploaded_files is not None:
-      # You might want to give the file a unique name or path in your bucket
-      destination_blob_name = f"{uploaded_files.name}"
-      upload_to_gcs(bucket_name, uploaded_files, destination_blob_name)
-
-  
 if __name__ == '__main__':
     password_protection()
 
