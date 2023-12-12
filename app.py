@@ -322,15 +322,15 @@ def main_dashboard():
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
   })
 
-'''          
+          
   # Use this in your Streamlit input handling
-  with st.expander('Update Current Test'):
-            new_ad_set_name = st.text_input("Update Current Ad Test")
-            st.write("*Note: Adding a new Ad Set will move the current test to past tests")
-            st.write('Need to refresh the app to see updates')
-            if st.button("Update Ad Set"):
-                update_ad_set_if_exists(new_ad_set_name, st.session_state.full_data)
-'''
+#  with st.expander('Update Current Test'):
+#            new_ad_set_name = st.text_input("Update Current Ad Test")
+#            st.write("*Note: Adding a new Ad Set will move the current test to past tests")
+#            st.write('Need to refresh the app to see updates')
+#            if st.button("Update Ad Set"):
+#                update_ad_set_if_exists(new_ad_set_name, st.session_state.full_data)
+
 
 
   # Streamlit interface
@@ -422,24 +422,24 @@ def main_dashboard():
   uploaded_images = []
   image_captions = []
 
-'''
-  with st.expander("Upload Images"):        
-            # Allow users to upload multiple images
-            st.write("*Note... images will not be saved, refreshing or exiting the page will reset the display")
-            uploaded_file = st.file_uploader("Select all images of tests at the same time (Shift+Select)", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
 
-            # Process each uploaded file
-            for file in uploaded_file:
-                if file is not None:
-                    # Convert to PIL Image
-                    image = Image.open(file)
-                    uploaded_images.append(image)
+#  with st.expander("Upload Images"):        
+#            # Allow users to upload multiple images
+#            st.write("*Note... images will not be saved, refreshing or exiting the page will reset the display")
+#            uploaded_file = st.file_uploader("Select all images of tests at the same time (Shift+Select)", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
+#
+#            # Process each uploaded file
+#            for file in uploaded_file:
+#                if file is not None:
+#                    # Convert to PIL Image
+#                    image = Image.open(file)
+#                    uploaded_images.append(image)
+#
+#                    # Get caption for each image
+#                    caption = st.text_input(f"Enter caption for image {len(uploaded_images)}", key=f"caption_{len(uploaded_images)}")
+#                    image_captions.append(caption)
+#
 
-                    # Get caption for each image
-                    caption = st.text_input(f"Enter caption for image {len(uploaded_images)}", key=f"caption_{len(uploaded_images)}")
-                    image_captions.append(caption)
-
-'''
           
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
