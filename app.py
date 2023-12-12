@@ -375,13 +375,7 @@ def main_dashboard():
 
   current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
   current_Ad_Set = current_Ad_Set.strip("'")
-  st.write(current_Ad_Set)
-  st.write(data[data['Ad_Set'] == current_Ad_Set])
-  st.write(data['Ad_Set'].unique())
   data = data[data['Ad_Set'] == current_Ad_Set]
-  
-
-  st.write(data)
 
   selected_columns = ['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks','Cost', 'Leads']
   filtered_data = data[selected_columns]
@@ -447,12 +441,12 @@ def main_dashboard():
   significance_results = [''] + significance_results + ['']
   
   # Add the significance results to the DataFrame
-  #final_df['Significance'] = significance_results
+  final_df['Significance'] = significance_results
 
-  #column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPL', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR', 'Significance']
-  #final_df = final_df[column_order]
+  column_order = ['Ad_Set', 'Ad_Name', 'Cost', 'Clicks', 'CPL', 'CPC', 'CPM', 'CTR', 'Leads', 'CVR', 'Significance']
+  final_df = final_df[column_order]
 
-  #final_df.reset_index(drop=True, inplace=True)
+  final_df.reset_index(drop=True, inplace=True)
 
   uploaded_images = []
   image_captions = []
