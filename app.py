@@ -450,7 +450,7 @@ def main_dashboard():
   image_data = get_image(bucket_name, object_name)
   st.image(image_data)
 
-  uploaded_files = st.file_uploader("Upload image)", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
+  uploaded_files = st.file_uploader("Upload image)", type=['png', 'jpg', 'jpeg'])
 
   if uploaded_files is not None:
       # You might want to give the file a unique name or path in your bucket
