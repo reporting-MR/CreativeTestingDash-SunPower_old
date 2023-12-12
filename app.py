@@ -55,6 +55,7 @@ def password_protection():
   else:
       main_dashboard()
 
+
 def update_ad_set_table(new_ad_set_name):
     # Query to find the current Ad-Set
     query = """
@@ -94,6 +95,8 @@ def update_ad_set_if_exists(new_ad_set_name, full_data):
     else:
         st.error("Ad_Set does not exist.")
 
+
+
 def upload_to_gcs(bucket_name, source_file, destination_blob_name):
     # Initialize the GCS client
     credentials = service_account.Credentials.from_service_account_info(
@@ -107,6 +110,8 @@ def upload_to_gcs(bucket_name, source_file, destination_blob_name):
     blob.upload_from_file(source_file, content_type='image/jpeg')  # Set content_type as per your file type
 
     st.success(f"Uploaded file to {destination_blob_name} in bucket {bucket_name}")
+
+
 
 def delete_ad_set(ad_set_value_to_delete, full_data):
         # SQL statement for deletion
@@ -127,7 +132,9 @@ def delete_ad_set(ad_set_value_to_delete, full_data):
                   st.experimental_rerun()
         else:
                   st.error("Ad_Set does not exist")
-          
+
+
+
 ### Code for past tests function ###
 def process_ad_set_data(data, ad_set):
     # Filter data for the specific ad set
@@ -152,7 +159,6 @@ def process_ad_set_data(data, ad_set):
     grouped_data = filtered_data.groupby(['Ad_Set', 'Ad_Name']).sum()
     aggregated_data = grouped_data.reset_index()
 
-    
     total = aggregated_data.sum(numeric_only=True)
     total['CPC'] = total['Cost']/total['Clicks']
     total['CPM'] = (total['Cost']/total['Impressions'])*1000
@@ -213,6 +219,7 @@ def process_ad_set_data(data, ad_set):
     final_df.reset_index(drop=True, inplace=True)
 
     return final_df
+
 
 def get_ad_names(ad_set_name, ad_data):
     # Retrieve all ad names from the given ad set
@@ -406,10 +413,6 @@ def main_dashboard():
   #filtered_list = [item for item in ct_images if item is not None]
   final_adset = get_ad_names(final_df["Ad_Set"].iloc[0], st.session_state.full_data)
   display_images(final_adset, final_adset)        
-
-  # Display images with captions if both are provided
-  if uploaded_images and all(image_captions):
-            display_images(uploaded_images, image_captions)
 
   st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
   
