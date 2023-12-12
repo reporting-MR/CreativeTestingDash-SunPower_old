@@ -376,6 +376,8 @@ def main_dashboard():
   current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
   data = data[data['Ad_Set'] == current_Ad_Set]
 
+  st.write(data)
+
   selected_columns = ['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks','Cost', 'Leads']
   filtered_data = data[selected_columns]
 
