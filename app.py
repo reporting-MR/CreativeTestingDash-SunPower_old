@@ -60,28 +60,6 @@ def password_protection():
   else:
       main_dashboard()
 
-def upload_file_to_github(file, file_path, token):
-    """
-    Upload a file to a specified path in the GitHub repository.
-    """
-    # Encode the file in Base64
-    content = base64.b64encode(file.read()).decode()
-
-    # Prepare the request payload
-    payload = {
-        "message": "Upload file via Streamlit app",
-        "content": content
-    }
-
-    # Define the API endpoint
-    url = f"https://api.github.com/repos/reporting-MR/CreativeTestingDash/contents/{file_path}"
-
-    # Send the request
-    headers = {'Authorization': f'token {token}'}
-    response = requests.put(url, json=payload, headers=headers)
-
-    return response
-
 def update_ad_set_table(new_ad_set_name):
     # Query to find the current Ad-Set
     query = """
@@ -472,7 +450,8 @@ def main_dashboard():
   image_data = get_image(bucket_name, object_name)
   st.image(image_data)
 
-  
+  uploaded_files = st.file_uploader("Upload image)", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
+
   if uploaded_files is not None:
       # You might want to give the file a unique name or path in your bucket
       destination_blob_name = f"uploads/{uploaded_files.name}"
