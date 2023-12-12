@@ -21,14 +21,9 @@ credentials = service_account.Credentials.from_service_account_info(
 client = bigquery.Client(credentials=credentials)
 
 def get_image(bucket_name, object_name):
-    # Assuming the service account credentials are securely configured
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"]
-    )
-    storage_client = storage.Client(credentials=credentials)
-    bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(object_name)
 
+    bucket_name = "creativetesting_images"
+    image_data = get_image(bucket_name, object_name)  
     # Download the image data
     image_data = blob.download_as_bytes()
     return image_data
@@ -241,6 +236,7 @@ def display_images(images, captions):
 
     # Display images in the center columns
     for idx, image in enumerate(images):
+        
         with cols[idx + 1]:  # +1 for offset due to initial white space
             st.image(image, caption=captions[idx], use_column_width=True)
 
