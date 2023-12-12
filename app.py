@@ -473,10 +473,10 @@ def main_dashboard():
   st.image(image_data)
 
   
-  if uploaded_file is not None:
+  if uploaded_files is not None:
       # You might want to give the file a unique name or path in your bucket
-      destination_blob_name = f"uploads/{uploaded_file.name}"
-      upload_to_gcs(bucket_name, uploaded_file, destination_blob_name)
+      destination_blob_name = f"uploads/{uploaded_files.name}"
+      upload_to_gcs(bucket_name, uploaded_files, destination_blob_name)
 
   
 if __name__ == '__main__':
