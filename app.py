@@ -13,7 +13,6 @@ import requests
 import json
 from google.cloud import storage
 
-
 st.set_page_config(page_title="SunPower Creative Ad Testing Dash",page_icon="🧑‍🚀",layout="wide")
 
 credentials = service_account.Credentials.from_service_account_info(
@@ -21,8 +20,8 @@ credentials = service_account.Credentials.from_service_account_info(
       )
 client = bigquery.Client(credentials=credentials)
 
-def generate_signed_url(bucket_name, object_name):
-    # Initialize Google Cloud Storage client with credentials from st.secrets
+def get_image(bucket_name, object_name):
+    # Assuming the service account credentials are securely configured
     credentials = service_account.Credentials.from_service_account_info(
         st.secrets["gcp_service_account"]
     )
@@ -30,9 +29,9 @@ def generate_signed_url(bucket_name, object_name):
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(object_name)
 
-    # Generate a signed URL
-    signed_url = blob.generate_signed_url(expiration=3600)
-    return signed_url
+    # Download the image data
+    image_data = blob.download_as_bytes()
+    return image_data
 
 def initialize_storage_client():
     credentials = service_account.Credentials.from_service_account_info(
@@ -456,14 +455,8 @@ def main_dashboard():
   bucket_name = "creativetesting_images"
   object_name = "batch-23-energy-bill_video_ugc_white-block_savings_electric-bill_savings_bill-after_PID.jpg"  # Replace with the path to your image in the bucket
 
-
-  # Generate signed URL
-  signed_url = generate_signed_url(bucket_name, object_name)
-
-  # Display the image using the signed URL
-  st.image(signed_url, caption="Image from GCS")
-
-  st.write("Signed URL:", signed_url)
+  image_data = get_image(bucket_name, object_name)
+  st.image(image_data)
   
 if __name__ == '__main__':
     password_protection()
