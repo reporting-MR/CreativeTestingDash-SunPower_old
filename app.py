@@ -31,7 +31,7 @@ def generate_signed_url(bucket_name, object_name):
     blob = bucket.blob(object_name)
 
     # Generate a signed URL
-    signed_url = blob.generate_signed_url()
+    signed_url = blob.generate_signed_url(expiration=3600)
     return signed_url
 
 def initialize_storage_client():
