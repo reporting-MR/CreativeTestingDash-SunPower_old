@@ -77,6 +77,7 @@ def update_ad_set_table(new_ad_set_name):
             ]
         )
         client.query(update_query, job_config=job_config).result()
+        st.success(f"Upload was successful! Please refresh the page to see updates.")
 
     # Insert the new Ad-Set with Type 'Current'
     insert_query = """
@@ -104,7 +105,6 @@ def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_
         upload_to_gcs(bucket_name, uploaded_file, destination_blob_name)
     
     update_ad_set_table(new_ad_set_name)  # Update the ad set table after successful uploads
-    st.success(f"Upload was successful! Please refresh the page to see updates.")
 
 
 def upload_to_gcs(bucket_name, source_file, destination_blob_name):
