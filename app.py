@@ -321,6 +321,7 @@ def main_dashboard():
       st.session_state.past_test_data = pandas.read_gbq(query, credentials=credentials)
 
   past_test_data = st.session_state.past_test_data
+  past_test_data['Ad_Set'] = past_test_data['Ad_Set'].apply(lambda x: x.strip("'"))
   
   # Renaming columns in a DataFrame
   data = data.rename(columns={
