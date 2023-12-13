@@ -88,7 +88,7 @@ def update_ad_set_table(new_ad_set_name):
         ]
     )
     client.query(insert_query, job_config=job_config).result()
-    st.experimental_rerun()
+    st.rerun()
 
 
 # Function to check ad set existence and update BigQuery
@@ -497,8 +497,8 @@ def main_dashboard():
           ad_names = get_ad_names(ad_set, st.session_state.full_data)
           display_images(ad_names, ad_names)
 
-  
-  upload_to_gcs(bucket_name, 'batch-27-interview-no-regrets_video_ugc_text-overlays_financing_accessibility-affordability_savings_energy-bill_PID.jpg', '')
+  test_image = st.file_uploader(f"Upload image for {ad_name}", key=ad_name, type=['png', 'jpg', 'jpeg'])
+  upload_to_gcs(bucket_name, test_image, '')
 
 if __name__ == '__main__':
     password_protection()
