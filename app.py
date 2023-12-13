@@ -19,10 +19,10 @@ credentials = service_account.Credentials.from_service_account_info(
           st.secrets["gcp_service_account"]
       )
 client = bigquery.Client(credentials=credentials)
+bucket_name = "creativetesting_images"
 
 def get_image(bucket_name, object_name):
 
-    bucket_name = "creativetesting_images"
     image_data = get_image(bucket_name, object_name)  
     # Download the image data
     image_data = blob.download_as_bytes()
