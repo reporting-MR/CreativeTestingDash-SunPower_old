@@ -321,6 +321,7 @@ def main_dashboard():
 
   past_test_data = st.session_state.past_test_data
   past_test_data['Ad_Set'] = past_test_data['Ad_Set'].apply(lambda x: x.strip("'"))
+  past_test_data = past_test_data.iloc[::-1].reset_index(drop=True)
   
   # Renaming columns in a DataFrame
   data = data.rename(columns={
