@@ -366,7 +366,7 @@ def main_dashboard():
 
           # If all images are uploaded, process the update
           if all_images_uploaded and st.button("Update Ad Set and Upload Images"):
-              update_ad_set_if_exists(new_ad_set_name, uploaded_images, st.session_state.full_data, backet_name)
+              update_ad_set_if_exists(new_ad_set_name, uploaded_images, st.session_state.full_data, bucket_name)
               st.success("Ad set updated and images uploaded successfully.")
           elif not all_images_uploaded:
               st.error("Please upload an image for each ad name.")
