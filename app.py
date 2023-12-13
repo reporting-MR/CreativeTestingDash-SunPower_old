@@ -220,8 +220,7 @@ def process_ad_set_data(data, ad_set):
 
     # Add a placeholder for the top row and append for the total row
     significance_results = [''] + significance_results + ['']
-
-    st.write(final_df)      
+      
     # Add the significance results to the DataFrame
     final_df['Significance'] = significance_results
 
@@ -498,9 +497,6 @@ def main_dashboard():
           st.dataframe(ad_set_dfs[ad_set], width=2000)
           ad_names = get_ad_names(ad_set, st.session_state.full_data)
           display_images(ad_names, ad_names)
-
-  test_image = st.file_uploader(f"Upload image for {ad_name}", key=ad_name, type=['png', 'jpg', 'jpeg'])
-  upload_to_gcs(bucket_name, test_image, '')
 
 if __name__ == '__main__':
     password_protection()
