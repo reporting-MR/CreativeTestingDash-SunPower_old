@@ -220,7 +220,8 @@ def process_ad_set_data(data, ad_set):
 
     # Add a placeholder for the top row and append for the total row
     significance_results = [''] + significance_results + ['']
-  
+
+    st.write(final_df)      
     # Add the significance results to the DataFrame
     final_df['Significance'] = significance_results
 
