@@ -98,14 +98,13 @@ def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_
     if len(uploaded_images) != len(ad_names):
         st.error(f"Please upload exactly {len(ad_names)} images for the ad names in this set.")
         return
-    st.write(uploaded_images)
     # Upload each file to GCS and update the ad set table
     for ad_name, uploaded_file in uploaded_images.items():
         destination_blob_name = f"{new_ad_set_name}/{ad_name}.jpg"  # Customize as needed
         upload_to_gcs(bucket_name, uploaded_file, destination_blob_name)
     
     update_ad_set_table(new_ad_set_name)  # Update the ad set table after successful uploads
-
+    st.success(f"Upload was successful! Please refresh the page to see updates.")
 
 
 def upload_to_gcs(bucket_name, source_file, destination_blob_name):
@@ -120,7 +119,6 @@ def upload_to_gcs(bucket_name, source_file, destination_blob_name):
     blob = bucket.blob(destination_blob_name)
     blob.upload_from_file(source_file, content_type='image/jpeg')  # Set content_type as per your file type
 
-    st.success(f"Uploaded file to {destination_blob_name} in bucket {bucket_name}")
 
 
 
