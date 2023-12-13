@@ -77,7 +77,6 @@ def update_ad_set_table(new_ad_set_name):
             ]
         )
         client.query(update_query, job_config=job_config).result()
-        st.success(f"Upload was successful! Please refresh the page to see updates.")
 
     # Insert the new Ad-Set with Type 'Current'
     insert_query = """
@@ -89,7 +88,7 @@ def update_ad_set_table(new_ad_set_name):
         ]
     )
     client.query(insert_query, job_config=job_config).result()
-    st.rerun()
+    st.success(f"Upload was successful! Please refresh the page to see updates.")
 
 
 # Function to check ad set existence and update BigQuery
