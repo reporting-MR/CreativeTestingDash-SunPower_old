@@ -470,6 +470,20 @@ def main_dashboard():
   final_df['Cost'] = round(final_df['Cost'], 0).astype(int)
   final_df['Cost'] = final_df['Cost'].apply(lambda x: f"${x}")
 
+  final_df['CPL'] = round(final_df['CPL'], 0).astype(int)
+  final_df['CPL'] = final_df['CPL'].apply(lambda x: f"${x}")
+
+  final_df['CPC'] = round(final_df['CPC'], 2)
+  final_df['CPC'] = final_df['CPC'].apply(lambda x: f"${x}")
+
+  final_df['CPM'] = round(final_df['CPM'], 0).astype(int)
+  final_df['CPM'] = final_df['CPM'].apply(lambda x: f"${x}")
+
+  final_df['CPM'] = round(final_df['CPM'], 0).astype(int)
+  final_df['CPM'] = final_df['CPM'].apply(lambda x: f"${x}")
+
+  final_df['CTR'] = final_df['CTR'].apply(lambda x: f"{x*100:.2f}%")
+  final_df['CVR'] = final_df['CVR'].apply(lambda x: f"{x*100:.2f}%")
           
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
