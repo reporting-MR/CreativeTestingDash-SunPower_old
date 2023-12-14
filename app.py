@@ -466,6 +466,10 @@ def main_dashboard():
 #                    image_captions.append(caption)
 #
 
+  #Format final_df correctly
+  final_df['Cost'] = round(final_df['Cost'])
+  final_df['Cost'] = final_df['Cost'].apply(lambda x: f"${x:.2f}")
+
           
   # Display the aggregated data
   st.dataframe(final_df, width=2000)
