@@ -468,7 +468,7 @@ def main_dashboard():
 
   #Format final_df correctly
   final_df['Cost'] = round(final_df['Cost'])
-  final_df['Cost'] = final_df['Cost'].apply(lambda x: f"${x:.2f}")
+  final_df['Cost'] = final_df['Cost'].apply(lambda x: f"${x}")
 
           
   # Display the aggregated data
