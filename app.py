@@ -471,7 +471,8 @@ def main_dashboard():
   final_df['Cost'] = final_df['Cost'].apply(lambda x: f"${x}")
 
   final_df['CPL'] = round(final_df['CPL'], 0).astype(int)
-  final_df['CPL'] = final_df['CPL'].apply(lambda x: f"${x}")
+  #final_df['CPL'] = final_df['CPL'].apply(lambda x: f"${x}")
+  final_df['CPL'] = final_df['CPL'].apply(lambda x: '' if abs(x) > 10000 else f"${x}")
 
   final_df['CPC'] = round(final_df['CPC'], 2)
   final_df['CPC'] = final_df['CPC'].apply(lambda x: f"${x}")
