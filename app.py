@@ -467,7 +467,7 @@ def main_dashboard():
 #
 
   #Format final_df correctly
-  final_df['Cost'] = round(final_df['Cost'], 0)
+  final_df['Cost'] = round(final_df['Cost'], 0).astype(int)
   final_df['Cost'] = final_df['Cost'].apply(lambda x: f"${x}")
 
           
