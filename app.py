@@ -93,7 +93,12 @@ def update_ad_set_table(new_ad_set_name):
 
 # Function to check ad set existence and update BigQuery
 def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_name):
+    
     ad_names = get_ad_names(new_ad_set_name, full_data)
+
+    if len(ad_names) == 0:
+        st.error("There is no ad_set with this name")
+        return
     
     if len(uploaded_images) != len(ad_names):
         st.error(f"Please upload exactly {len(ad_names)} images for the ad names in this set.")
@@ -350,16 +355,6 @@ def main_dashboard():
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
   })
 
-          
-  # Use this in your Streamlit input handling
-#  with st.expander('Update Current Test'):
-#            new_ad_set_name = st.text_input("Update Current Ad Test")
-#            st.write("*Note: Adding a new Ad Set will move the current test to past tests")
-#            st.write('Need to refresh the app to see updates')
-#            if st.button("Update Ad Set"):
-#                update_ad_set_if_exists(new_ad_set_name, st.session_state.full_data)
-
-
 
   # Streamlit interface for selecting new ad set
   with st.expander('Update Current Test and Upload Images'):
@@ -391,8 +386,6 @@ def main_dashboard():
 
   current_Ad_Set = current_Ad_Set.strip("'")
   data = data[data['Ad_Set'] == current_Ad_Set]
-
-  st.write(data)
           
   selected_columns = ['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks','Cost', 'Leads']
   filtered_data = data[selected_columns]
