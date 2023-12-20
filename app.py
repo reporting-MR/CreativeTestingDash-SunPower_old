@@ -113,33 +113,16 @@ def update_ad_set_table(new_ad_set_name, campaign_name=None):
     st.success(f"Upload was successful! Please refresh the page to see updates.")
 
 
-# Function to check ad set existence and update BigQuery
-def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_name):
-    
-    ad_names = get_ad_names(new_ad_set_name, full_data)
-    campaign_name = None
+def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_name, campaign_name=None):
+    # The logic for retrieving and filtering ad_names is now handled in the main function
+    # So, we directly proceed with uploading files and updating the ad set table
 
-    if len(ad_names) == 0:
-        st.error("There is no ad_set with this name")
-        return
-
-    if len(ad_names) > 6:
-        campaign_name = st.text_input("Enter Campaign Name")
-        if not campaign_name:
-            st.error("Please enter a campaign name to proceed.")
-            return
-        # Filter ad_names based on the campaign_name
-        ad_names = filter_ad_names_by_campaign(ad_names, campaign_name, full_data)
-          
-    if len(uploaded_images) != len(ad_names):
-        st.error(f"Please upload exactly {len(ad_names)} images for the ad names in this set.")
-        return
-    # Upload each file to GCS and update the ad set table
     for ad_name, uploaded_file in uploaded_images.items():
         destination_blob_name = f"{new_ad_set_name}/{ad_name}.jpg"  # Customize as needed
         upload_to_gcs(bucket_name, uploaded_file, destination_blob_name)
     
     update_ad_set_table(new_ad_set_name, campaign_name)  # Update the ad set table after successful uploads
+
 
 
 def upload_to_gcs(bucket_name, source_file, destination_blob_name):
@@ -393,29 +376,37 @@ def main_dashboard():
 
 
   # Streamlit interface for selecting new ad set
-  with st.expander('Update Current Test and Upload Images'):
-      new_ad_set_name = st.text_input("Enter New Ad Set Name")
-      uploaded_images = {}
+with st.expander('Update Current Test and Upload Images'):
+    new_ad_set_name = st.text_input("Enter New Ad Set Name")
+    uploaded_images = {}
+    campaign_name = None
 
-      if new_ad_set_name:
-          # Retrieve ad names for the new ad set
-          ad_names = get_ad_names(new_ad_set_name, st.session_state.full_data)
+    if new_ad_set_name:
+        # Retrieve ad names for the new ad set
+        ad_names = get_ad_names(new_ad_set_name, st.session_state.full_data)
 
-          # Display file uploaders for each ad name
-          all_images_uploaded = True
-          for ad_name in ad_names:
-              uploaded_file = st.file_uploader(f"Upload image for {ad_name}", key=ad_name, type=['png', 'jpg', 'jpeg'])
-              uploaded_images[ad_name] = uploaded_file
+        if len(ad_names) == 0:
+            st.error("There is no ad_set with this name")
+        else:
+            if len(ad_names) > 6:
+                campaign_name = st.text_input("Enter Campaign Name")
+                if campaign_name:
+                    ad_names = filter_ad_names_by_campaign(ad_names, campaign_name, st.session_state.full_data)
+                else:
+                    st.error("Please enter a campaign name to proceed.")
+                    return
 
-              # Check if image has been uploaded for each ad name
-              if uploaded_file is None:
-                  all_images_uploaded = False
+            # Display file uploaders for each ad name
+            all_images_uploaded = True
+            for ad_name in ad_names:
+                uploaded_file = st.file_uploader(f"Upload image for {ad_name}", key=ad_name, type=['png', 'jpg', 'jpeg'])
+                uploaded_images[ad_name] = uploaded_file
 
-          # If all images are uploaded, process the update
-          if all_images_uploaded and st.button("Update Ad Set and Upload Images"):
-              update_ad_set_if_exists(new_ad_set_name, uploaded_images, st.session_state.full_data, bucket_name)
-          elif not all_images_uploaded:
-              st.error("Please upload an image for each ad name.")
+                if uploaded_file is None:
+                    all_images_uploaded = False
+
+            if all_images_uploaded and st.button("Update Ad Set and Upload Images"):
+                update_ad_set_if_exists(new_ad_set_name, uploaded_images, st.session_state.full_data, bucket_name, campaign_name)
 
               
   current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
