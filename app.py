@@ -388,6 +388,8 @@ def main_dashboard():
 
 
   current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
+
+  st.write(current_Ad_Set)
   current_Ad_Set = current_Ad_Set.strip("'")
   data = data[data['Ad_Set'] == current_Ad_Set]
 
@@ -429,7 +431,7 @@ def main_dashboard():
   # Concatenate aggregated_data with total_df
   final_df = pd.concat([aggregated_data, total_df])
 
-  st.write(final_df)
+  
   # Initialize an empty list to store significance results
   significance_results = []
   
