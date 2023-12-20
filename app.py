@@ -93,7 +93,7 @@ def update_ad_set_table(new_ad_set_name, campaign_name=None):
         update_query = """
         UPDATE `sunpower-375201.sunpower_streamlit.CreativeTestingStorage`
         SET Type = 'Past'
-        WHERE Ad_Set = @current_ad_set AND Campaign = @current_campaign
+        WHERE Ad_Set = @current_ad_set 
         """
         job_config = bigquery.QueryJobConfig(
             query_parameters=[
