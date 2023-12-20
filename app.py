@@ -65,6 +65,18 @@ def filter_ad_names_by_campaign(ad_names, campaign_name, full_data):
 
     return filtered_ad_names
 
+def get_campaign_value(ad_set, creative_storage_data):
+    # Filter the creative_storage_data for the given ad_set
+    filtered_data = creative_storage_data[creative_storage_data['Ad_Set'] == ad_set]
+
+    # Check if there is an associated campaign value
+    if not filtered_data.empty and 'Campaign' in filtered_data.columns:
+        # Return the first campaign value found
+        return filtered_data.iloc[0]['Campaign']
+    else:
+        # Return None if no campaign value is found
+        return None
+
 def update_ad_set_table(new_ad_set_name):
     # Query to find the current Ad-Set
     query = """
@@ -88,7 +100,7 @@ def update_ad_set_table(new_ad_set_name):
 
     # Insert the new Ad-Set with Type 'Current'
     insert_query = """
-    INSERT INTO `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` (Ad_Set, Type) VALUES (@new_ad_set, 'Current')
+    INSERT INTO `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` (Ad_Set, Type, Campaign) VALUES (@new_ad_set, 'Current')
     """
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
@@ -103,6 +115,7 @@ def update_ad_set_table(new_ad_set_name):
 def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_name):
     
     ad_names = get_ad_names(new_ad_set_name, full_data)
+    campaign_name = None
 
     if len(ad_names) == 0:
         st.error("There is no ad_set with this name")
@@ -124,7 +137,7 @@ def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_
         destination_blob_name = f"{new_ad_set_name}/{ad_name}.jpg"  # Customize as needed
         upload_to_gcs(bucket_name, uploaded_file, destination_blob_name)
     
-    update_ad_set_table(new_ad_set_name)  # Update the ad set table after successful uploads
+    update_ad_set_table(new_ad_set_name, campaign_name)  # Update the ad set table after successful uploads
 
 
 def upload_to_gcs(bucket_name, source_file, destination_blob_name):
@@ -138,7 +151,6 @@ def upload_to_gcs(bucket_name, source_file, destination_blob_name):
     # Create a new blob and upload the file's content.
     blob = bucket.blob(destination_blob_name)
     blob.upload_from_file(source_file, content_type='image/jpeg')  # Set content_type as per your file type
-
 
 
 
@@ -168,6 +180,15 @@ def delete_ad_set(ad_set_value_to_delete, full_data):
 def process_ad_set_data(data, ad_set):
     # Filter data for the specific ad set
 
+    campaign_value = get_campaign_value(ad_set, past_test_data)
+
+    if campaign_value:
+        # Filter data on both ad_set and campaign_value
+        ad_set_data = data[(data['Ad_Set'] == ad_set) & (data['Campaign'] == campaign_value)]
+    else:
+        # Filter data on just ad_set
+        ad_set_data = data[data['Ad_Set'] == ad_set]
+
     data = data.rename(columns={
       'Campaign_Name__Facebook_Ads': 'Campaign',
       'Ad_Set_Name__Facebook_Ads': 'Ad_Set',
@@ -180,7 +201,8 @@ def process_ad_set_data(data, ad_set):
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
     })
   
-    ad_set_data = data[data['Ad_Set'] == ad_set]
+    
+    #ad_set_data = data[data['Ad_Set'] == ad_set]
 
     # Your data processing steps
     selected_columns = ['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks', 'Cost', 'Leads']
@@ -267,7 +289,6 @@ def process_ad_set_data(data, ad_set):
     return final_df
 
 
-
 def update_current_tests(new_ad_set_name, uploaded_files, full_data, bucket_name):
     ad_names = get_ad_names(new_ad_set_name, full_data)
     
@@ -281,7 +302,6 @@ def update_current_tests(new_ad_set_name, uploaded_files, full_data, bucket_name
         upload_to_gcs(bucket_name, file, destination_blob_name)
     
     update_ad_set_table(new_ad_set_name)  # Update the ad set table after successful uploads
-
 
 
 def get_ad_names(ad_set_name, ad_data):
@@ -398,11 +418,21 @@ def main_dashboard():
           elif not all_images_uploaded:
               st.error("Please upload an image for each ad name.")
 
-
+              
   current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
 
   current_Ad_Set = current_Ad_Set.strip("'")
-  data = data[data['Ad_Set'] == current_Ad_Set]
+
+  campaign_value = get_campaign_value(ad_set, current_test_data)
+
+  if campaign_value:
+        # Filter data on both ad_set and campaign_value
+        ad_set_data = data[(data['Ad_Set'] == ad_set) & (data['Campaign'] == campaign_value)]
+  else:
+        # Filter data on just ad_set
+        ad_set_data = data[data['Ad_Set'] == ad_set]
+          
+  data = ad_set_data
           
   selected_columns = ['Ad_Set', 'Ad_Name', 'Impressions', 'Clicks','Cost', 'Leads']
   filtered_data = data[selected_columns]
