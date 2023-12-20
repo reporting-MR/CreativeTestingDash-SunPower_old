@@ -376,37 +376,37 @@ def main_dashboard():
 
 
   # Streamlit interface for selecting new ad set
-with st.expander('Update Current Test and Upload Images'):
-    new_ad_set_name = st.text_input("Enter New Ad Set Name")
-    uploaded_images = {}
-    campaign_name = None
+  with st.expander('Update Current Test and Upload Images'):
+      new_ad_set_name = st.text_input("Enter New Ad Set Name")
+      uploaded_images = {}
+      campaign_name = None
 
-    if new_ad_set_name:
-        # Retrieve ad names for the new ad set
-        ad_names = get_ad_names(new_ad_set_name, st.session_state.full_data)
+      if new_ad_set_name:
+          # Retrieve ad names for the new ad set
+          ad_names = get_ad_names(new_ad_set_name, st.session_state.full_data)
 
-        if len(ad_names) == 0:
-            st.error("There is no ad_set with this name")
-        else:
-            if len(ad_names) > 6:
-                campaign_name = st.text_input("Enter Campaign Name")
-                if campaign_name:
-                    ad_names = filter_ad_names_by_campaign(ad_names, campaign_name, st.session_state.full_data)
-                else:
-                    st.error("Please enter a campaign name to proceed.")
-                    return
+          if len(ad_names) == 0:
+              st.error("There is no ad_set with this name")
+          else:
+              if len(ad_names) > 6:
+                  campaign_name = st.text_input("Enter Campaign Name")
+                  if campaign_name:
+                      ad_names = filter_ad_names_by_campaign(ad_names, campaign_name, st.session_state.full_data)
+                  else:
+                      st.error("Please enter a campaign name to proceed.")
+                      return
 
-            # Display file uploaders for each ad name
-            all_images_uploaded = True
-            for ad_name in ad_names:
-                uploaded_file = st.file_uploader(f"Upload image for {ad_name}", key=ad_name, type=['png', 'jpg', 'jpeg'])
-                uploaded_images[ad_name] = uploaded_file
+              # Display file uploaders for each ad name
+              all_images_uploaded = True
+              for ad_name in ad_names:
+                  uploaded_file = st.file_uploader(f"Upload image for {ad_name}", key=ad_name, type=['png', 'jpg', 'jpeg'])
+                  uploaded_images[ad_name] = uploaded_file
 
-                if uploaded_file is None:
-                    all_images_uploaded = False
+                  if uploaded_file is None:
+                      all_images_uploaded = False
 
-            if all_images_uploaded and st.button("Update Ad Set and Upload Images"):
-                update_ad_set_if_exists(new_ad_set_name, uploaded_images, st.session_state.full_data, bucket_name, campaign_name)
+              if all_images_uploaded and st.button("Update Ad Set and Upload Images"):
+                  update_ad_set_if_exists(new_ad_set_name, uploaded_images, st.session_state.full_data, bucket_name, campaign_name)
 
               
   current_Ad_Set = current_test_data['Ad_Set'].iloc[0]
