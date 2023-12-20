@@ -56,12 +56,16 @@ def password_protection():
   else:
       main_dashboard()
 
-def filter_ad_names_by_campaign(ad_names, campaign_name, full_data):
-    # Filter the full_data DataFrame for the given campaign name
+def filter_ad_names_by_campaign(ad_set, campaign_name, full_data):
+
+    #Fiter to the ad_set
+    filtered_data = full_data[full_data['Ad_Set_Name__Facebook_Ads'] == ad_set] 
+          
+    # Filter the full_data DataFrame for the given campaign name   
     filtered_data = full_data[full_data['Campaign_Name__Facebook_Ads'] == campaign_name]
 
     # Filter ad_names based on those present in the filtered_data
-    filtered_ad_names = [ad_name for ad_name in ad_names if ad_name in filtered_data['Ad_Name__Facebook_Ads'].tolist()]
+    filtered_ad_names = filtered_data["Ad_Set_Name__Facebook_Ads"]
 
     return filtered_ad_names
 
@@ -391,7 +395,7 @@ def main_dashboard():
               if len(ad_names) > 6:
                   campaign_name = st.text_input("Enter Campaign Name")
                   if campaign_name:
-                      ad_names = filter_ad_names_by_campaign(ad_names, campaign_name, st.session_state.full_data)
+                      ad_names = filter_ad_names_by_campaign(new_ad_set_name, campaign_name, st.session_state.full_data)
                   else:
                       st.error("Please enter a campaign name to proceed.")
                       return
