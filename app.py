@@ -65,7 +65,7 @@ def filter_ad_names_by_campaign(ad_set, campaign_name, full_data):
     filtered_data = full_data[full_data['Campaign_Name__Facebook_Ads'] == campaign_name]
 
     # Filter ad_names based on those present in the filtered_data
-    filtered_ad_names = filtered_data["Ad_Name__Facebook_Ads"]
+    filtered_ad_names = filtered_data["Ad_Name__Facebook_Ads"].unique()
 
     return filtered_ad_names
 
