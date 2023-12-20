@@ -180,15 +180,6 @@ def delete_ad_set(ad_set_value_to_delete, full_data):
 def process_ad_set_data(data, ad_set, past_test_data):
     # Filter data for the specific ad set
 
-    campaign_value = get_campaign_value(ad_set, past_test_data)
-
-    if campaign_value:
-        # Filter data on both ad_set and campaign_value
-        ad_set_data = data[(data['Ad_Set'] == ad_set) & (data['Campaign'] == campaign_value)]
-    else:
-        # Filter data on just ad_set
-        ad_set_data = data[data['Ad_Set'] == ad_set]
-
     data = data.rename(columns={
       'Campaign_Name__Facebook_Ads': 'Campaign',
       'Ad_Set_Name__Facebook_Ads': 'Ad_Set',
@@ -200,7 +191,16 @@ def process_ad_set_data(data, ad_set, past_test_data):
       'Ad_Effective_Status__Facebook_Ads' : 'Ad_Status',
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
     })
-  
+
+    campaign_value = get_campaign_value(ad_set, past_test_data)
+
+    if campaign_value:
+        # Filter data on both ad_set and campaign_value
+        ad_set_data = data[(data['Ad_Set'] == ad_set) & (data['Campaign'] == campaign_value)]
+    else:
+        # Filter data on just ad_set
+        ad_set_data = data[data['Ad_Set'] == ad_set]
+
     
     #ad_set_data = data[data['Ad_Set'] == ad_set]
 
