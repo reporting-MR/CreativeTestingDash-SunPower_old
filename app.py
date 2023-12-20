@@ -177,7 +177,7 @@ def delete_ad_set(ad_set_value_to_delete, full_data):
 
 
 ### Code for past tests function ###
-def process_ad_set_data(data, ad_set):
+def process_ad_set_data(data, ad_set, past_test_data):
     # Filter data for the specific ad set
 
     campaign_value = get_campaign_value(ad_set, past_test_data)
@@ -546,7 +546,7 @@ def main_dashboard():
   #        delete_ad_set(remove_ad_set, st.session_state.full_data)
       
   for ad_set in past_tests:
-      ad_set_dfs[ad_set] = process_ad_set_data(st.session_state.full_data, ad_set)
+      ad_set_dfs[ad_set] = process_ad_set_data(st.session_state.full_data, ad_set, past_test_data)
   
   # Creating a dropdown for each ad set in past_tests
   for ad_set in past_tests:
