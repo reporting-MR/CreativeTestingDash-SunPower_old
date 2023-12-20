@@ -423,7 +423,7 @@ def main_dashboard():
 
   current_Ad_Set = current_Ad_Set.strip("'")
 
-  campaign_value = get_campaign_value(ad_set, current_test_data)
+  campaign_value = get_campaign_value(current_Ad_Set, current_test_data)
 
   if campaign_value:
         # Filter data on both ad_set and campaign_value
