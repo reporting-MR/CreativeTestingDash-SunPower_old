@@ -427,10 +427,10 @@ def main_dashboard():
 
   if campaign_value:
         # Filter data on both ad_set and campaign_value
-        ad_set_data = data[(data['Ad_Set'] == ad_set) & (data['Campaign'] == campaign_value)]
+        ad_set_data = data[(data['Ad_Set'] == current_Ad_Set) & (data['Campaign'] == campaign_value)]
   else:
         # Filter data on just ad_set
-        ad_set_data = data[data['Ad_Set'] == ad_set]
+        ad_set_data = data[data['Ad_Set'] == current_Ad_Set]
           
   data = ad_set_data
           
