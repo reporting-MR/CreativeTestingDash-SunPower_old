@@ -56,6 +56,14 @@ def password_protection():
   else:
       main_dashboard()
 
+def filter_ad_names_by_campaign(ad_names, campaign_name, full_data):
+    # Filter the full_data DataFrame for the given campaign name
+    filtered_data = full_data[full_data['Campaign_Name__Facebook_Ads'] == campaign_name]
+
+    # Filter ad_names based on those present in the filtered_data
+    filtered_ad_names = [ad_name for ad_name in ad_names if ad_name in filtered_data['Ad_Name__Facebook_Ads'].tolist()]
+
+    return filtered_ad_names
 
 def update_ad_set_table(new_ad_set_name):
     # Query to find the current Ad-Set
@@ -99,7 +107,15 @@ def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_
     if len(ad_names) == 0:
         st.error("There is no ad_set with this name")
         return
-    
+
+    if len(ad_names) > 6:
+        campaign_name = st.text_input("Enter Campaign Name")
+        if not campaign_name:
+            st.error("Please enter a campaign name to proceed.")
+            return
+        # Filter ad_names based on the campaign_name
+        ad_names = filter_ad_names_by_campaign(ad_names, campaign_name, full_data)
+          
     if len(uploaded_images) != len(ad_names):
         st.error(f"Please upload exactly {len(ad_names)} images for the ad names in this set.")
         return
@@ -341,6 +357,7 @@ def main_dashboard():
   past_test_data = st.session_state.past_test_data
   past_test_data['Ad_Set'] = past_test_data['Ad_Set'].apply(lambda x: x.strip("'"))
   past_test_data = past_test_data.iloc[::-1].reset_index(drop=True)
+  st.write(past_test_data)
   
   # Renaming columns in a DataFrame
   data = data.rename(columns={
