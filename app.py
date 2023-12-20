@@ -395,7 +395,7 @@ def main_dashboard():
                   else:
                       st.error("Please enter a campaign name to proceed.")
                       return
-
+              st.write(ad_names)
               # Display file uploaders for each ad name
               all_images_uploaded = True
               for ad_name in ad_names:
