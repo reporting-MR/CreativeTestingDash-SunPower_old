@@ -77,34 +77,36 @@ def get_campaign_value(ad_set, creative_storage_data):
         # Return None if no campaign value is found
         return None
 
-def update_ad_set_table(new_ad_set_name):
-    # Query to find the current Ad-Set
+def update_ad_set_table(new_ad_set_name, campaign_name=None):
+    # Query to find the current Ad-Set and Campaign
     query = """
-    SELECT Ad_Set FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` WHERE Type = 'Current'
+    SELECT Ad_Set, Campaign FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` WHERE Type = 'Current'
     """
-    current_ad_set = pandas.read_gbq(query, credentials=credentials)
+    current_ad_set_campaign = pandas.read_gbq(query, credentials=credentials)
 
     # If current Ad-Set exists, update it to 'Past'
-    if not current_ad_set.empty:
+    if not current_ad_set_campaign.empty:
         update_query = """
         UPDATE `sunpower-375201.sunpower_streamlit.CreativeTestingStorage`
         SET Type = 'Past'
-        WHERE Ad_Set = @current_ad_set
+        WHERE Ad_Set = @current_ad_set AND Campaign = @current_campaign
         """
         job_config = bigquery.QueryJobConfig(
             query_parameters=[
-                bigquery.ScalarQueryParameter("current_ad_set", "STRING", current_ad_set.iloc[0]['Ad_Set'])
+                bigquery.ScalarQueryParameter("current_ad_set", "STRING", current_ad_set_campaign.iloc[0]['Ad_Set']),
+                bigquery.ScalarQueryParameter("current_campaign", "STRING", current_ad_set_campaign.iloc[0]['Campaign'])
             ]
         )
         client.query(update_query, job_config=job_config).result()
 
     # Insert the new Ad-Set with Type 'Current'
     insert_query = """
-    INSERT INTO `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` (Ad_Set, Type, Campaign) VALUES (@new_ad_set, 'Current')
+    INSERT INTO `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` (Ad_Set, Campaign, Type) VALUES (@new_ad_set, @campaign, 'Current')
     """
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
-            bigquery.ScalarQueryParameter("new_ad_set", "STRING", new_ad_set_name)
+            bigquery.ScalarQueryParameter("new_ad_set", "STRING", new_ad_set_name),
+            bigquery.ScalarQueryParameter("campaign", "STRING", campaign_name if campaign_name else '')
         ]
     )
     client.query(insert_query, job_config=job_config).result()
@@ -153,7 +155,6 @@ def upload_to_gcs(bucket_name, source_file, destination_blob_name):
     blob.upload_from_file(source_file, content_type='image/jpeg')  # Set content_type as per your file type
 
 
-
 def delete_ad_set(ad_set_value_to_delete, full_data):
         # SQL statement for deletion
         if ad_set_value_to_delete in full_data['Ad_Set_Name__Facebook_Ads'].values:
@@ -173,7 +174,6 @@ def delete_ad_set(ad_set_value_to_delete, full_data):
                   st.experimental_rerun()
         else:
                   st.error("Ad_Set does not exist")
-
 
 
 ### Code for past tests function ###
