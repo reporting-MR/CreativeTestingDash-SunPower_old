@@ -429,6 +429,7 @@ def main_dashboard():
   # Concatenate aggregated_data with total_df
   final_df = pd.concat([aggregated_data, total_df])
 
+  st.write(final_df)
   # Initialize an empty list to store significance results
   significance_results = []
   
@@ -465,23 +466,6 @@ def main_dashboard():
   uploaded_images = []
   image_captions = []
 
-
-#  with st.expander("Upload Images"):        
-#            # Allow users to upload multiple images
-#            st.write("*Note... images will not be saved, refreshing or exiting the page will reset the display")
-#            uploaded_file = st.file_uploader("Select all images of tests at the same time (Shift+Select)", type=['png', 'jpg', 'jpeg'], accept_multiple_files=True)
-#
-#            # Process each uploaded file
-#            for file in uploaded_file:
-#                if file is not None:
-#                    # Convert to PIL Image
-#                    image = Image.open(file)
-#                    uploaded_images.append(image)
-#
-#                    # Get caption for each image
-#                    caption = st.text_input(f"Enter caption for image {len(uploaded_images)}", key=f"caption_{len(uploaded_images)}")
-#                    image_captions.append(caption)
-#
 
   #Format final_df correctly
   final_df['Cost'] = round(final_df['Cost'], 0).astype(int)
