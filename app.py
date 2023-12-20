@@ -122,7 +122,7 @@ def update_ad_set_if_exists(new_ad_set_name, uploaded_images, full_data, bucket_
     # So, we directly proceed with uploading files and updating the ad set table
 
     for ad_name, uploaded_file in uploaded_images.items():
-        destination_blob_name = f"{new_ad_set_name}/{ad_name}.jpg"  # Customize as needed
+        destination_blob_name = f"{ad_name}.jpg" 
         upload_to_gcs(bucket_name, uploaded_file, destination_blob_name)
     
     update_ad_set_table(new_ad_set_name, campaign_name)  # Update the ad set table after successful uploads
