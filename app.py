@@ -538,14 +538,21 @@ def main_dashboard():
   for ad_set in past_tests:
       ad_set_dfs[ad_set] = process_ad_set_data(st.session_state.full_data, ad_set, past_test_data)
       st.write(ad_set_dfs[ad_set])
-  
-  # Creating a dropdown for each ad set in past_tests
-  for ad_set in past_tests:
+
+  for ad_set in ad_set_dfs:
       with st.expander(f"Show Data for {ad_set}"):
-          st.dataframe(ad_set_dfs[ad_set], width=2000)
-          ad_names = get_ad_names(ad_set, st.session_state.full_data)
-          st.write(ad_names)
+          st.dataframe(ad_set, width=2000)
+          ad_names = ad_set['Ad_Name']
+          ad_names = [item + ".jpg" for item in ad_names]
           display_images(ad_names, ad_names)
+
+  # Creating a dropdown for each ad set in past_tests
+  #for ad_set in past_tests:
+  #    with st.expander(f"Show Data for {ad_set}"):
+  #        st.dataframe(ad_set_dfs[ad_set], width=2000)
+  #        ad_names = get_ad_names(ad_set, st.session_state.full_data)
+  #        st.write(ad_names)
+  #        display_images(ad_names, ad_names)
 
 if __name__ == '__main__':
     password_protection()
