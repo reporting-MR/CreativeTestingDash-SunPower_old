@@ -412,6 +412,9 @@ def main_dashboard():
                   campaign_name = st.text_input("Enter Campaign Name")
                   if campaign_name:
                       ad_names = filter_ad_names_by_campaign(new_ad_set_name, campaign_name, st.session_state.full_data)
+                      if len(ad_names) == 0:
+                          st.error("There is no campaign with this name")
+                          return
                   else:
                       st.error("Please enter a campaign name to proceed.")
                       return
