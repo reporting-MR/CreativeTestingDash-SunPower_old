@@ -554,6 +554,8 @@ def main_dashboard():
   # Construct public URL for the image
   image_url = f"https://storage.googleapis.com/{bucket_name}/{image_name}"
 
+  st.write(image_url)
+
   # Display the image using Streamlit
   st.image(image_url, caption=image_name, use_column_width=True)
 
