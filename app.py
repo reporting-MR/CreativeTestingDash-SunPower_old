@@ -552,7 +552,7 @@ def main_dashboard():
   image_name = ad_names[0]
 
   # Construct public URL for the image
-  image_url = f"https://storage.googleapis.com/{bucket_name}/{image_name}"
+  image_url = f"https://storage.cloud.google.com/{bucket_name}/{image_name}"
 
   st.write(image_url)
 
