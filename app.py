@@ -520,7 +520,9 @@ def main_dashboard():
   #ct_images = final_df["Ad_Name"]
   #filtered_list = [item for item in ct_images if item is not None]
   final_adset = get_ad_names(final_df["Ad_Set"].iloc[0], st.session_state.full_data)
-  st.write(final_adset)
+
+  
+  st.write(final_df['Ad_Set'])
   #display_images(final_adset, final_adset)        
           
   st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
