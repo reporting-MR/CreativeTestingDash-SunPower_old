@@ -522,7 +522,7 @@ def main_dashboard():
   
   final_adnames = final_df['Ad_Name']
   
-  display_images(final_adnames, final_adnames)        
+  #display_images(final_adnames, final_adnames)        
           
   st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
   
