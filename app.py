@@ -415,7 +415,6 @@ def main_dashboard():
                   else:
                       st.error("Please enter a campaign name to proceed.")
                       return
-              st.write(ad_names)
               # Display file uploaders for each ad name
               all_images_uploaded = True
               for ad_name in ad_names:
@@ -570,15 +569,6 @@ def main_dashboard():
           ad_names = [item + ".jpg" for item in ad_names]
           ad_names.pop()
           display_images(ad_names, ad_names)
-
-
-  # Creating a dropdown for each ad set in past_tests
-  #for ad_set in past_tests:
-  #    with st.expander(f"Show Data for {ad_set}"):
-  #        st.dataframe(ad_set_dfs[ad_set], width=2000)
-  #        ad_names = get_ad_names(ad_set, st.session_state.full_data)
-  #        st.write(ad_names)
-  #        display_images(ad_names, ad_names)
 
 if __name__ == '__main__':
     password_protection()
