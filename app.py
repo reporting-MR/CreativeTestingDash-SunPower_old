@@ -521,9 +521,10 @@ def main_dashboard():
   #filtered_list = [item for item in ct_images if item is not None]
   
   final_adnames = final_df['Ad_Name']
-  st.write(final_adnames)
+  final_adnames = [item + ".jpg" for item in final_adnames]
+  final_adnames.pop()
   
-  #display_images(final_adnames, final_adnames)        
+  display_images(final_adnames, final_adnames)        
           
   st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
   
