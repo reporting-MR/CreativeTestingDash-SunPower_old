@@ -522,7 +522,7 @@ def main_dashboard():
   final_adset = get_ad_names(final_df["Ad_Set"].iloc[0], st.session_state.full_data)
 
   
-  st.write(final_df['Ad_Set'])
+  st.write(final_df['Ad_Name'])
   #display_images(final_adset, final_adset)        
           
   st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
