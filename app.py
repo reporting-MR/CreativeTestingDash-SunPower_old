@@ -323,12 +323,15 @@ def get_ad_names(ad_set_name, ad_data):
 def display_images(images, captions):
     num_images = len(images)
     cols = st.columns(num_images + 2)  # Extra columns for white space
+    bucket_name = "creativetesting_images"
 
     # Display images in the center columns
-    for idx, image in enumerate(images):
-        
+    for idx, image_name in enumerate(images):
+        # Download the image from GCS to a temporary file
+        local_image_path = download_blob_to_temp(bucket_name, image_name)
+
         with cols[idx + 1]:  # +1 for offset due to initial white space
-            st.image(image, caption=captions[idx], use_column_width=True)
+            st.image(local_image_path, caption=captions[idx], use_column_width=True)
 
 
 def main_dashboard():
