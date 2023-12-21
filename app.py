@@ -545,7 +545,7 @@ def main_dashboard():
           current_df = ad_set_dfs[ad_set]
           ad_names = current_df['Ad_Name']
           ad_names = [item + ".jpg" for item in ad_names]
-          st.write(ad_names)
+          ad_names.pop()
           display_images(ad_names, ad_names)
 
   # Creating a dropdown for each ad set in past_tests
