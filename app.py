@@ -21,12 +21,6 @@ credentials = service_account.Credentials.from_service_account_info(
 client = bigquery.Client(credentials=credentials)
 bucket_name = "creativetesting_images"
 
-def get_image(bucket_name, object_name):
-
-    image_data = get_image(bucket_name, object_name)  
-    # Download the image data
-    image_data = blob.download_as_bytes()
-    return image_data
 
 def initialize_storage_client():
     credentials = service_account.Credentials.from_service_account_info(
