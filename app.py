@@ -541,7 +541,8 @@ def main_dashboard():
 
   for ad_set in ad_set_dfs:
       with st.expander(f"Show Data for {ad_set}"):
-          st.dataframe(ad_set, width=2000)
+          st.write(ad_set)
+          #st.dataframe(ad_set, width=2000)
           ad_names = ad_set['Ad_Name']
           ad_names = [item + ".jpg" for item in ad_names]
           display_images(ad_names, ad_names)
