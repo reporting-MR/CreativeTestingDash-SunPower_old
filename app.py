@@ -537,6 +537,7 @@ def main_dashboard():
       
   for ad_set in past_tests:
       ad_set_dfs[ad_set] = process_ad_set_data(st.session_state.full_data, ad_set, past_test_data)
+      st.write(ad_set_dfs[ad_set])
   
   # Creating a dropdown for each ad set in past_tests
   for ad_set in past_tests:
