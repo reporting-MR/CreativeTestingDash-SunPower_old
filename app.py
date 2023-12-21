@@ -524,7 +524,7 @@ def main_dashboard():
   final_adnames = [item + ".jpg" for item in final_adnames]
   final_adnames.pop()
   
-  display_images(final_adnames, final_adnames)        
+  #display_images(final_adnames, final_adnames)        
           
   st.markdown("<h2 style='text-align: center;'>Past Tests</h2>", unsafe_allow_html=True)
   
@@ -548,6 +548,15 @@ def main_dashboard():
           ad_names = [item + ".jpg" for item in ad_names]
           ad_names.pop()
           display_images(ad_names, ad_names)
+
+  image_name = ad_names[0]
+
+  # Construct public URL for the image
+  image_url = f"https://storage.googleapis.com/{bucket_name}/{image_name}"
+
+  # Display the image using Streamlit
+  st.image(image_url, caption=image_name, use_column_width=True)
+
 
   # Creating a dropdown for each ad set in past_tests
   #for ad_set in past_tests:
