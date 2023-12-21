@@ -50,6 +50,24 @@ def password_protection():
   else:
       main_dashboard()
 
+def download_blob_to_temp(bucket_name, source_blob_name, temp_folder="/tmp"):
+    """Downloads a blob from the bucket to a temporary file."""
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(source_blob_name)
+
+    # Create a temporary file path
+    if not os.path.exists(temp_folder):
+        os.makedirs(temp_folder)
+    local_path = os.path.join(temp_folder, source_blob_name)
+
+    # Download the blob to the temporary file path
+    blob.download_to_filename(local_path)
+
+    return local_path
+
+
+
 def filter_ad_names_by_campaign(ad_set, campaign_name, full_data):
 
     #Fiter to the ad_set
@@ -551,13 +569,12 @@ def main_dashboard():
 
   image_name = ad_names[0]
 
-  # Construct public URL for the image
-  image_url = f"https://storage.cloud.google.com/{bucket_name}/{image_name}"
+  # Download the image to a temporary file
+  local_image_path = download_blob_to_temp(bucket_name, image_name)
 
-  st.write(image_url)
+  # Display the image in Streamlit
+  st.image(local_image_path, caption=image_name, use_column_width=True)
 
-  # Display the image using Streamlit
-  st.image(image_url, caption=image_name, use_column_width=True)
 
 
   # Creating a dropdown for each ad set in past_tests
