@@ -53,7 +53,7 @@ def password_protection():
 
 def download_blob_to_temp(bucket_name, source_blob_name, temp_folder="/tmp"):
     """Downloads a blob from the bucket to a temporary file."""
-    storage_client = storage.Client()
+    storage_client = storage.Client(credentials=credentials)
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(source_blob_name)
 
