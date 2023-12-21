@@ -521,6 +521,7 @@ def main_dashboard():
   #filtered_list = [item for item in ct_images if item is not None]
   
   final_adnames = final_df['Ad_Name']
+  st.write(final_adnames)
   
   #display_images(final_adnames, final_adnames)        
           
