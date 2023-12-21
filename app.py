@@ -537,7 +537,6 @@ def main_dashboard():
       
   for ad_set in past_tests:
       ad_set_dfs[ad_set] = process_ad_set_data(st.session_state.full_data, ad_set, past_test_data)
-      st.write(ad_set_dfs[ad_set])
 
   for ad_set in ad_set_dfs:
       with st.expander(f"Show Data for {ad_set}"):
