@@ -543,6 +543,7 @@ def main_dashboard():
       with st.expander(f"Show Data for {ad_set}"):
           st.dataframe(ad_set_dfs[ad_set], width=2000)
           ad_names = get_ad_names(ad_set, st.session_state.full_data)
+          st.write(ad_names)
           display_images(ad_names, ad_names)
 
 if __name__ == '__main__':
